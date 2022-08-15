@@ -1,0 +1,123 @@
+Description: Proper init NSAutoreleasePool to avoid FTBFS.
+Author: YOSHINO Yoshihito <yy.y.ja.jp@gmail.com>
+Last-Update: 2017-06-04
+--- unar-1.10.1.orig/XADMaster/XADTest2.m
++++ unar-1.10.1/XADMaster/XADTest2.m
+@@ -63,11 +63,12 @@
+ 
+ int main(int argc,char **argv)
+ {
++	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
++
+ 	NSString *filename;
+ 	NSEnumerator *enumerator=[FilesForArgs(argc,argv) objectEnumerator];
+ 	while(filename=[enumerator nextObject])
+ 	{
+-		NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
+ 		XADArchiveParser *parser=[XADArchiveParser archiveParserForPath:filename];
+ 
+ 		NSLog(@"Parsing file \"%@\" with parser \"%@\".",filename,[parser formatName]);
+@@ -80,8 +81,9 @@ int main(int argc,char **argv)
+ 		NSLog(@"Archive format: \"%@\", properties: %@",[parser formatName],[parser properties]);
+ 		[parser parse];
+ 		NSLog(@"Archive format: \"%@\", properties: %@",[parser formatName],[parser properties]);
+-
+-		[pool release];
+ 	}
++
++	[pool release];
++
+ 	return 0;
+ }
+--- unar-1.10.1.orig/XADMaster/XADTest3.m
++++ unar-1.10.1/XADMaster/XADTest3.m
+@@ -129,12 +129,12 @@ NSString *EscapeString(NSString *str)
+ 
+ int main(int argc,char **argv)
+ {
++	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
++
+ 	NSString *filename;
+ 	NSEnumerator *enumerator=[FilesForArgs(argc,argv) objectEnumerator];
+ 	while(filename=[enumerator nextObject])
+ 	{
+-		NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
+-
+ 		printf("Testing %s...\n",[filename UTF8String]);
+ 
+ 		XADArchiveParser *parser=[XADArchiveParser archiveParserForPath:filename];
+@@ -149,8 +149,9 @@ int main(int argc,char **argv)
+ 		} @catch(id e) {
+ 			printf("*** Exception: %s\n",[[e description] UTF8String]);
+ 		}
+-
+-		[pool release];
+ 	}
++
++	[pool release];
++
+ 	return 0;
+ }
+--- unar-1.10.1.orig/XADMaster/XADTest4.m
++++ unar-1.10.1/XADMaster/XADTest4.m
+@@ -79,15 +79,14 @@
+ 
+ int main(int argc,char **argv)
+ {
++	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
++
+ 	NSString *filename;
+ 	NSEnumerator *enumerator=[FilesForArgs(argc,argv) objectEnumerator];
+ 	while(filename=[enumerator nextObject])
+ 	{
+-		NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
+-
+ 		printf("Testing %s...\n",[filename UTF8String]);
+ 
+-		NSString *filename=[NSString stringWithUTF8String:argv[i]];
+ 		XADArchiveParser *parser=[XADArchiveParser archiveParserForPath:filename];
+ 		ArchiveTester *tester=[[[ArchiveTester alloc] initWithIndentLevel:2] autorelease];
+ 		[parser setDelegate:tester];
+@@ -97,8 +96,9 @@ int main(int argc,char **argv)
+ 
+ 		[parser parse];
+ 		[tester done:parser];
+-
+-		[pool release];
+ 	}
++
++	[pool release];
++
+ 	return 0;
+ }
+--- unar-1.10.1.orig/XADMaster/XADTest6.m
++++ unar-1.10.1/XADMaster/XADTest6.m
+@@ -59,14 +59,14 @@ findsFileInterestingForReason:(NSString
+ 
+ int main(int argc,char **argv)
+ {
++	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
++
+ 	int res=0;
+ 
+ 	NSString *filename;
+ 	NSEnumerator *enumerator=[FilesForArgs(argc,argv) objectEnumerator];
+ 	while(filename=[enumerator nextObject])
+ 	{
+-		NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
+-
+ 		reasons=[NSMutableArray array];
+ 		failed=0;
+ 
+@@ -117,9 +117,9 @@ int main(int argc,char **argv)
+ 
+ 			res|=2;
+ 		}
+-
+-		[pool release];
+ 	}
+ 
++	[pool release];
++
+ 	return res;
+ }

@@ -1,0 +1,8 @@
+fix-crashes.patch
+CSInputBuffer-bit-string-reading.patch
+gnustep-support.patch
+proper-init-autoreleasepool.patch
+document-undocumented-options.patch
+use-system-wavpack.patch
+pass-cppflags-for-fortify-functions.patch
+remove-build-date.patch

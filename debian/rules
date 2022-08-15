@@ -1,0 +1,64 @@
+#!/usr/bin/make -f
+
+PKG_VERSION := $(shell dpkg-parsechangelog | sed -rne 's,^Version: ([^-]+).*,\1,p')
+PKG := $(shell dh_listpackages)
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+	NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+	MAKEFLAGS += -j$(NUMJOBS)
+endif
+
+get-orig-source:
+	# Uscan can grab upstream source zip
+	uscan --noconf --force-download --download-current-version --destdir=.
+	# Just to be safe
+	rm -rf $(PKG)-$(PKG_VERSION)
+	# Unpack
+	unzip $(PKG)$(PKG_VERSION)_src.zip
+	# Delete unnecessary folder
+	rm -rf __MACOSX
+	# Rename directory to a versioned way
+	mv The\ Unarchiver/ $(PKG)-$(PKG_VERSION)
+	# Delete zip upstream file
+	rm $(PKG)$(PKG_VERSION)_src.zip
+	# Delete object files
+	find $(PKG)-$(PKG_VERSION) -name '*.o' -delete
+	# Delete project files
+	find $(PKG)-$(PKG_VERSION) -depth -type d \
+		\( -name '*.lproj' -o -name '*.xcodeproj' \) \
+			-exec rm -rf {} \;
+	# Delete MAC OS X preferences files
+	find $(PKG)-$(PKG_VERSION) -name '*.plist' -delete
+	# Delete other OSs specific dirs or files
+	rm -rf $(PKG)-$(PKG_VERSION)/XADMaster/Windows/ \
+		$(PKG)-$(PKG_VERSION)/Dependencies \
+		$(PKG)-$(PKG_VERSION)/.DS_Store \
+		$(PKG)-$(PKG_VERSION)/.hgignore \
+		$(PKG)-$(PKG_VERSION)/.hgtags
+	find $(PKG)-$(PKG_VERSION) -name 'Makefile.windows' -delete
+	find $(PKG)-$(PKG_VERSION) -depth -type d -name '__MACOSX' -exec rm -rf {} \;
+	# Repacked source should have a top-level directory ending in .orig
+	# as a reminder to other developers
+	mv $(PKG)-$(PKG_VERSION) $(PKG)-$(PKG_VERSION).orig
+	tar -cvJf ../$(PKG)_$(PKG_VERSION).orig.tar.xz --owner \
+			root --group root --mode a+rX \
+			$(PKG)-$(PKG_VERSION).orig
+
+	rm -r $(PKG)-$(PKG_VERSION).orig
+
+%:
+	dh $@ --with bash-completion
+
+override_dh_auto_build:
+	OBJCFLAGS="$(CFLAGS)" $(MAKE) -C XADMaster -f Makefile.linux
+
+override_dh_auto_clean:
+	$(MAKE) -C XADMaster -f Makefile.linux clean
+
+override_dh_auto_test:
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	XADMaster/XADTest2
+	XADMaster/XADTest3
+	XADMaster/XADTest4
+endif

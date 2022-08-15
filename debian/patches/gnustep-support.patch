@@ -1,0 +1,47 @@
+Description: Fix FTBFS by missing GNUSTEP header.
+Author: YOSHINO Yoshihito <yy.y.ja.jp@gmail.com>
+Last-Update: 2017-06-04
+--- unar-1.10.1.orig/XADMaster/XADTestUtilities.m
++++ unar-1.10.1/XADMaster/XADTestUtilities.m
+@@ -26,6 +26,33 @@ NSArray *FilesForArgs(int argc,char **ar
+ 		NSString *filename=[NSString stringWithUTF8String:argv[i]];
+ 		NSURL *url=[NSURL fileURLWithPath:filename];
+ 
++#ifdef GNUSTEP
++		NSFileManager *manager=[NSFileManager defaultManager];
++
++		BOOL isdir;
++		[manager fileExistsAtPath:filename isDirectory:&isdir];
++		if(isdir)
++		{
++			NSUInteger fs=[[manager fileAttributesAtPath:filename traverseLink:NO] fileSystemNumber];
++			NSDirectoryEnumerator *enumerator=[manager enumeratorAtPath:filename];
++			NSString *path;
++			while(path=[enumerator nextObject])
++			{
++				NSURL *u=[NSURL URLWithString:path relativeToURL:url];
++				NSDictionary *attrs=[enumerator fileAttributes];
++				if([attrs fileExtensionHidden]) continue;
++				if(fs!=[attrs fileSystemNumber] && [[attrs fileType] isEqualToString:NSFileTypeDirectory]) [enumerator skipDescendents];
++				if([[attrs fileType] isEqualToString:NSFileTypeRegular])
++				{
++					[files addObject:u.path];
++				}
++			}
++		}
++		else
++		{
++			[files addObject:filename];
++		}
++#else
+ 		NSNumber *isdir;
+ 		[url getResourceValue:&isdir forKey:NSURLIsDirectoryKey error:NULL];
+ 		if(isdir.boolValue)
+@@ -49,6 +76,7 @@ NSArray *FilesForArgs(int argc,char **ar
+ 		{
+ 			[files addObject:filename];
+ 		}
++#endif
+ 
+ 
+ 		[pool release];

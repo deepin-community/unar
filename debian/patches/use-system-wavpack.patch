@@ -1,0 +1,41 @@
+Description: Use the system wavpack library
+ Use the system wavpack library instead of the embedded one so that if
+ wavpack has a security vulnerability, unar doesn't have to be
+ changed.
+Author: Matt Kraai <kraai@debian.org>
+Last-Update: 2012-09-06
+--- a/XADMaster/Makefile.linux
++++ b/XADMaster/Makefile.linux
+@@ -41,6 +41,7 @@
+ 	-lgnustep-base \
+ 	-lz \
+ 	-lbz2 \
++	-lwavpack \
+ 	-licuuc \
+ 	-lobjc \
+ 	-lm
+--- a/XADMaster/Makefile.common
++++ b/XADMaster/Makefile.common
+@@ -209,12 +209,6 @@
+ 			PPMd/VariantG.c \
+ 			PPMd/VariantH.c \
+ 			PPMd/VariantI.c \
+-			wavpack/bits.c \
+-			wavpack/float.c \
+-			wavpack/metadata.c \
+-			wavpack/unpack.c \
+-			wavpack/words.c \
+-			wavpack/wputils.c \
+ 			WinZipJPEG/ArithmeticDecoder.c \
+ 			WinZipJPEG/Decompressor.c \
+ 			WinZipJPEG/JPEG.c
+--- a/XADMaster/XADWinZipWavPackHandle.h
++++ b/XADMaster/XADWinZipWavPackHandle.h
+@@ -1,6 +1,6 @@
+ #import "CSBlockStreamHandle.h"
+ 
+-#import "wavpack/wavpack.h"
++#import <wavpack/wavpack.h>
+ 
+ @interface XADWinZipWavPackHandle:CSBlockStreamHandle
+ {

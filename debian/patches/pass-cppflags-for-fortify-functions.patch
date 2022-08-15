@@ -1,0 +1,34 @@
+Description: Pass CPPFLAGS to use hardening flags, fortify functions.
+Forwarded: http://code.google.com/p/theunarchiver/issues/detail?id=529
+Author: Julián Moreno Patiño <julian@debian.org>
+Last-Update: 2016-05-27
+--- a/UniversalDetector/Makefile.linux
++++ b/UniversalDetector/Makefile.linux
+@@ -31,9 +31,9 @@ CXX_OPTS =
+ 
+ AUTODEPENDENCY_CFLAGS=-MMD -MF$(@:.o=.d) -MT$@
+ 
+-ALL_OBJCFLAGS = $(OBJC_OPTS) $(GCC_OPTS) $(GNUSTEP_OPTS) $(OBJCFLAGS)
+-ALL_CFLAGS = $(C_OPTS) $(GCC_OPTS) $(CFLAGS)
+-ALL_CXXFLAGS = $(CXX_OPTS) $(GCC_OPTS) $(CXXFLAGS)
++ALL_OBJCFLAGS = $(OBJC_OPTS) $(GCC_OPTS) $(GNUSTEP_OPTS) $(OBJCFLAGS) $(CPPFLAGS)
++ALL_CFLAGS = $(C_OPTS) $(GCC_OPTS) $(CFLAGS) $(CPPFLAGS)
++ALL_CXXFLAGS = $(CXX_OPTS) $(GCC_OPTS) $(CXXFLAGS) $(CPPFLAGS)
+ 
+ # Options for linking
+ 
+--- a/XADMaster/Makefile.linux
++++ b/XADMaster/Makefile.linux
+@@ -31,9 +31,9 @@ CXX_OPTS =
+ 
+ AUTODEPENDENCY_CFLAGS=-MMD -MF$(@:.o=.d) -MT$@
+ 
+-ALL_OBJCFLAGS = $(OBJC_OPTS) $(GCC_OPTS) $(GNUSTEP_OPTS) $(CFLAGS) $(OBJCFLAGS)
+-ALL_CFLAGS = $(C_OPTS) $(GCC_OPTS) $(CFLAGS)
+-ALL_CXXFLAGS = $(CXX_OPTS) $(GCC_OPTS) $(CXXFLAGS)
++ALL_OBJCFLAGS = $(OBJC_OPTS) $(GCC_OPTS) $(GNUSTEP_OPTS) $(OBJCFLAGS) $(CPPFLAGS)
++ALL_CFLAGS = $(C_OPTS) $(GCC_OPTS) $(CFLAGS) $(CPPFLAGS)
++ALL_CXXFLAGS = $(CXX_OPTS) $(GCC_OPTS) $(CXXFLAGS) $(CPPFLAGS)
+ 
+ # Options for linking
+ 

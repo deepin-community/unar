@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+cd $ADTTMP
+mkdir foo
+echo bar >foo/bar
+echo baz >foo/baz
+7zr a foo.7z foo
+mv foo foo~
+unar foo.7z
+cmp foo~/bar foo/bar
+cmp foo~/baz foo/baz

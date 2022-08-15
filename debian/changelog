@@ -1,0 +1,5 @@
+unar (1.10.1.1.1-deepin) stable; urgency=medium
+
+  * ['Rebuild  against by  current gcc 11.2']
+
+ -- Deepin Packages Builder <packages@deepin.org>  Wed, 10 Aug 2022 21:30:27 +0800

@@ -1,0 +1,39 @@
+Description: Proper fix for CSInputBuffer bit string reading.
+Author: YOSHINO Yoshihito <yy.y.ja.jp@gmail.com>
+Last-Update: 2017-06-10
+--- a/XADMaster/CSInputBuffer.h
++++ b/XADMaster/CSInputBuffer.h
+@@ -130,12 +130,20 @@
+ 
+ static inline void _CSInputCheckAndFillBits(CSInputBuffer *self,int numbits)
+ {
+-	if(numbits>self->numbits) _CSInputFillBits(self);
++	if(numbits>self->numbits)
++	{
++		_CSInputFillBits(self);
++		if(numbits>self->numbits) _CSInputBufferRaiseEOF(self);
++	}
+ }
+ 
+ static inline void _CSInputCheckAndFillBitsLE(CSInputBuffer *self,int numbits)
+ {
+-	if(numbits>self->numbits) _CSInputFillBitsLE(self);
++	if(numbits>self->numbits)
++	{
++		_CSInputFillBitsLE(self);
++		if(numbits>self->numbits) _CSInputBufferRaiseEOF(self);
++	}
+ }
+ 
+ static inline unsigned int CSInputPeekBitString(CSInputBuffer *self,int numbits)
+--- a/XADMaster/CSInputBuffer.m
++++ b/XADMaster/CSInputBuffer.m
+@@ -181,8 +181,6 @@
+ //		shift-=8;
+ //	}
+ 
+-	if(startoffset+numbytes>_CSInputBytesLeftInBuffer(self)) _CSInputBufferRaiseEOF(self);
+-
+ 	switch(numbytes)
+ 	{
+ 		case 4:

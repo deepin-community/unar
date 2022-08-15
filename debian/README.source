@@ -1,0 +1,8 @@
+unar for Debian
+---------------
+
+To get upstream tarball in each unar release, please bump 
+the upstream release version in the debian/changelog entry
+and then run in the upstream directory:
+
+# debian/rules get-orig-source

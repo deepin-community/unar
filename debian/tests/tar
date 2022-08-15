@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e
+cd $ADTTMP
+mkdir foo
+echo bar >foo/bar
+echo baz >foo/baz
+for suffix in Z bz2 gz lzma xz; do
+    tar caf foo.tar.$suffix foo
+    mv foo foo~
+    unar foo.tar.$suffix
+    cmp foo~/bar foo/bar
+    cmp foo~/baz foo/baz
+    rm -fr foo
+    mv foo~ foo
+done

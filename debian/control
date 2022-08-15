@@ -1,0 +1,29 @@
+Source: unar
+Maintainer: Deepin Developer <deepin-dev@deepin.org>
+Uploaders: Deepin Packages Builder <packages@deepin.org>
+ Julián Moreno Patiño <julian@debian.org>
+Section: utils
+Priority: optional
+Build-Depends: debhelper (>= 9.20120115), gobjc, libbz2-dev, libgnustep-base-dev,
+ libicu-dev, libssl-dev, libwavpack-dev, zlib1g-dev, bash-completion (>= 1:1.0)
+Standards-Version: 3.9.8
+Homepage: http://unarchiver.c3.cx/
+#Vcs-Git
+#Vcs-Browser
+
+Package: unar
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Pre-Depends: dpkg (>= 1.15.6~)
+Conflicts: theunarchiver
+Provides: theunarchiver
+Replaces: theunarchiver
+Description: Unarchiver for a variety of file formats
+ The Unarchiver is an archive unpacker program with support for the popular
+ zip, RAR, 7z, tar, gzip, bzip2, LZMA, XZ, CAB, MSI, NSIS, EXE, ISO, BIN, and
+ split file formats, as well as the old Stuffit, Stuffit X, DiskDouble, Compact
+ Pro, Packit, cpio, compress (.Z), ARJ, ARC, PAK, ACE, ZOO, LZH, ADF, DMS, LZX,
+ PowerPacker, LBR, Squeeze, Crunch, and other old formats.
+ .
+ This package contains the lsar tool which lists the contents of archives and
+ the unar tool which extracts those contents.

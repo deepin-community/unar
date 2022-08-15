@@ -1,0 +1,8 @@
+Tests: 7z
+Depends: @, p7zip
+
+Tests: tar
+Depends: @, bzip2, ncompress, xz-utils
+
+Tests: zip
+Depends: @, zip

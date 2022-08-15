@@ -1,0 +1,3 @@
+version=3
+http://bitbucket.org/WAHa_06x36/theunarchiver/downloads \
+  .*/unar-(\d\S*)\.tar\.bz2

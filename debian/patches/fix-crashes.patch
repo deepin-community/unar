@@ -1,0 +1,1568 @@
+Description: Import upstream's commits to fix crashes.
+Forwarded: https://bitbucket.org/WAHa_06x36/theunarchiver/issues/933
+Origin: upstream,
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/59f5a493ecfde7a74ab5cabce26e4ff6403eedc3
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/0dd444080021fc1e0d1af535a877298071bd8e97
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/c2df329bab6e9c8cffcefd19bad809c2b957d3fd
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/01766d7c47f38e9ef0af18d12fdd16ab1a051ced
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/411668fd77ee7b66bbdf33d84978c18ff550a9a9
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/b63593e649bd0d39d084890cbc9259be7e60f017
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/93d9c87ef611c4f466003b72fa55d9d9e449867d
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/80b6388262fa3d384b3754b1ff8ede142edff5eb
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/f022d13ea2a8ee23ccd6a35eb87be2346da3a9dc
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/a434c35e79717527ecaa9e1fec5d70dff1eb4fa7
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/9acc5e4d54c37cea95db65e3de70077535735d92
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/e6551148652ad44dfe0837bac29f6aa6caa78c60
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/424343b088321c23004b6bd13583736c5464b2c3
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/2dfc5d31f51b24237bedb8b4189d7aae5f730a4e
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/648b1b192113c98dbf191475c0ab5b6aed7bd119
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/cc0a3fde4f4f065e475fb0bab4c1ab64fa2f5ccd
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/dc791d9d4cb02b557885af8d13ec0522dc5274ae
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/a77f14b715c014a15ee6d4a6d42546d8d033eabd
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/f1a42c132896d9ce6d20a23b0939e4812ca09db3
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/893ff8545db7288523457d1d37aedd2c127c9e88
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/9e39d2c1e7dbe4a1e994bb3983660ead375077b4
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/a88d8d1f045ec895a083d98702f93242a45de210
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/cbd4c03ed01b942925fa051a325ee69b0e4811be
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/2529baec38b5621654abde299d19a34c50de26ea
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/c1c49487cb5ed571fa4ed834188538b0121f4a8f
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/a393f6d75b899a1fb3a220d9b002de3ce313763d
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/b42e91a8226986b1dc5f8f334a161b9d02f57c91
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/7eb8da6f1b2d68c483f2f123102cc3b3fcf1612e
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/8b5b9b93d1d2767c0444cb92e90477b921592b00
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/929cbd9124b70b7c5d4ad8c98085f9bd24823976
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/ebb43bc5ec0e31daee223dd729bbd5b1c69cf16d
+ https://bitbucket.org/WAHa_06x36/theunarchiver/commits/da4adab4b9cf62b1766f3a72dd3f00a5a74d7701
+Last-Update: 2017-03-23
+Index: unar-1.10.1/UniversalDetector/universalchardet/Big5Freq.tab
+===================================================================
+--- unar-1.10.1.orig/UniversalDetector/universalchardet/Big5Freq.tab
++++ unar-1.10.1/UniversalDetector/universalchardet/Big5Freq.tab
+@@ -55,9 +55,6 @@
+ #define BIG5_TYPICAL_DISTRIBUTION_RATIO (float)0.75
+ 
+ 
+-//Char to FreqOrder table , 
+-#define BIG5_TABLE_SIZE  5376
+-
+ static const PRInt16 Big5CharToFreqOrder[] =
+ {
+    1,1801,1506, 255,1431, 198,   9,  82,   6,5008, 177, 202,3681,1256,2821, 110, //   16
+Index: unar-1.10.1/UniversalDetector/universalchardet/CharDistribution.cpp
+===================================================================
+--- unar-1.10.1.orig/UniversalDetector/universalchardet/CharDistribution.cpp
++++ unar-1.10.1/UniversalDetector/universalchardet/CharDistribution.cpp
+@@ -70,42 +70,42 @@ float CharDistributionAnalysis::GetConfi
+ EUCTWDistributionAnalysis::EUCTWDistributionAnalysis()
+ {
+   mCharToFreqOrder = EUCTWCharToFreqOrder;
+-  mTableSize = EUCTW_TABLE_SIZE;
++  mTableSize = sizeof(EUCTWCharToFreqOrder)/sizeof(EUCTWCharToFreqOrder[0]);
+   mTypicalDistributionRatio = EUCTW_TYPICAL_DISTRIBUTION_RATIO;
+ }
+ 
+ EUCKRDistributionAnalysis::EUCKRDistributionAnalysis()
+ {
+   mCharToFreqOrder = EUCKRCharToFreqOrder;
+-  mTableSize = EUCKR_TABLE_SIZE;
++  mTableSize = sizeof(EUCKRCharToFreqOrder)/sizeof(EUCKRCharToFreqOrder[0]);
+   mTypicalDistributionRatio = EUCKR_TYPICAL_DISTRIBUTION_RATIO;
+ }
+ 
+ GB2312DistributionAnalysis::GB2312DistributionAnalysis()
+ {
+   mCharToFreqOrder = GB2312CharToFreqOrder;
+-  mTableSize = GB2312_TABLE_SIZE;
++  mTableSize = sizeof(GB2312CharToFreqOrder)/sizeof(GB2312CharToFreqOrder[0]);
+   mTypicalDistributionRatio = GB2312_TYPICAL_DISTRIBUTION_RATIO;
+ }
+ 
+ Big5DistributionAnalysis::Big5DistributionAnalysis()
+ {
+   mCharToFreqOrder = Big5CharToFreqOrder;
+-  mTableSize = BIG5_TABLE_SIZE;
++  mTableSize = sizeof(Big5CharToFreqOrder)/sizeof(Big5CharToFreqOrder[0]);
+   mTypicalDistributionRatio = BIG5_TYPICAL_DISTRIBUTION_RATIO;
+ }
+ 
+ SJISDistributionAnalysis::SJISDistributionAnalysis()
+ {
+   mCharToFreqOrder = JISCharToFreqOrder;
+-  mTableSize = JIS_TABLE_SIZE;
++  mTableSize = sizeof(JISCharToFreqOrder)/sizeof(JISCharToFreqOrder[0]);
+   mTypicalDistributionRatio = JIS_TYPICAL_DISTRIBUTION_RATIO;
+ }
+ 
+ EUCJPDistributionAnalysis::EUCJPDistributionAnalysis()
+ {
+   mCharToFreqOrder = JISCharToFreqOrder;
+-  mTableSize = JIS_TABLE_SIZE;
++  mTableSize = sizeof(JISCharToFreqOrder)/sizeof(JISCharToFreqOrder[0]);
+   mTypicalDistributionRatio = JIS_TYPICAL_DISTRIBUTION_RATIO;
+ }
+ 
+Index: unar-1.10.1/UniversalDetector/universalchardet/EUCKRFreq.tab
+===================================================================
+--- unar-1.10.1.orig/UniversalDetector/universalchardet/EUCKRFreq.tab
++++ unar-1.10.1/UniversalDetector/universalchardet/EUCKRFreq.tab
+@@ -52,9 +52,6 @@
+ 
+ #define EUCKR_TYPICAL_DISTRIBUTION_RATIO (float) 6.0
+ 
+-#define EUCKR_TABLE_SIZE  2352
+-
+-//Char to FreqOrder table , 
+ static const PRInt16 EUCKRCharToFreqOrder[] =
+ {
+   13, 130, 120,1396, 481,1719,1720, 328, 609, 212,1721, 707, 400, 299,1722,  87,
+Index: unar-1.10.1/UniversalDetector/universalchardet/EUCTWFreq.tab
+===================================================================
+--- unar-1.10.1.orig/UniversalDetector/universalchardet/EUCTWFreq.tab
++++ unar-1.10.1/UniversalDetector/universalchardet/EUCTWFreq.tab
+@@ -56,9 +56,6 @@
+ 
+ #define EUCTW_TYPICAL_DISTRIBUTION_RATIO (float)0.75
+ 
+-//Char to FreqOrder table , 
+-#define EUCTW_TABLE_SIZE  8102
+-
+ static const PRInt16 EUCTWCharToFreqOrder[] =
+ {
+    1,1800,1506, 255,1431, 198,   9,  82,   6,7310, 177, 202,3615,1256,2808, 110, // 2742
+Index: unar-1.10.1/UniversalDetector/universalchardet/GB2312Freq.tab
+===================================================================
+--- unar-1.10.1.orig/UniversalDetector/universalchardet/GB2312Freq.tab
++++ unar-1.10.1/UniversalDetector/universalchardet/GB2312Freq.tab
+@@ -53,8 +53,6 @@
+ 
+ #define GB2312_TYPICAL_DISTRIBUTION_RATIO (float)0.9
+ 
+-#define GB2312_TABLE_SIZE  3760
+-
+ static const PRInt16 GB2312CharToFreqOrder[] =
+ {
+ 1671, 749,1443,2364,3924,3807,2330,3921,1704,3463,2691,1511,1515, 572,3191,2205,
+Index: unar-1.10.1/UniversalDetector/universalchardet/JISFreq.tab
+===================================================================
+--- unar-1.10.1.orig/UniversalDetector/universalchardet/JISFreq.tab
++++ unar-1.10.1/UniversalDetector/universalchardet/JISFreq.tab
+@@ -55,10 +55,6 @@
+ 
+ #define JIS_TYPICAL_DISTRIBUTION_RATIO (float) 3.0
+ 
+-
+-//Char to FreqOrder table , 
+-#define JIS_TABLE_SIZE  4368
+-
+ static const PRInt16 JISCharToFreqOrder[] =
+ {
+   40,   1,   6, 182, 152, 180, 295,2127, 285, 381,3295,4304,3068,4606,3165,3510, //   16
+Index: unar-1.10.1/UniversalDetector/universalchardet/nsMBCSGroupProber.cpp
+===================================================================
+--- unar-1.10.1.orig/UniversalDetector/universalchardet/nsMBCSGroupProber.cpp
++++ unar-1.10.1/UniversalDetector/universalchardet/nsMBCSGroupProber.cpp
+@@ -156,7 +156,7 @@ nsProbingState nsMBCSGroupProber::Handle
+     {
+       if (!mIsActive[i])
+         continue;
+-      st = mProbers[i]->HandleData(aBuf + start, aLen + 1 - start);
++      st = mProbers[i]->HandleData(aBuf + start, aLen - start);
+       if (st == eFoundIt)
+       {
+         mBestGuess = i;
+Index: unar-1.10.1/XADMaster/BWT.c
+===================================================================
+--- unar-1.10.1.orig/XADMaster/BWT.c
++++ unar-1.10.1/XADMaster/BWT.c
+@@ -38,7 +38,7 @@ void UnsortBWT(uint8_t *dest,uint8_t *sr
+ 	}
+ }
+ 
+-void UnsortST4(uint8_t *dest,uint8_t *src,int blocklen,int firstindex,uint32_t *transform)
++bool UnsortST4(uint8_t *dest,uint8_t *src,int blocklen,int firstindex,uint32_t *transform)
+ {
+ 	int counts[256];
+ 	for(int i=0;i<256;i++) counts[i]=0;
+@@ -115,20 +115,26 @@ void UnsortST4(uint8_t *dest,uint8_t *sr
+ 	{
+ 		if(tval&0x800000)
+ 		{
+-			index=transform[tval&0x7fffff]&0x7fffff;
+-			transform[tval&0x7fffff]++;
++			int newindex=tval&0x7fffff;
++			if(newindex>=blocklen) { free(array2); return false; } // TODO: Is it a bug that this can happen, or not?
++			index=transform[newindex]&0x7fffff;
++			transform[newindex]++;
+ 		}
+ 		else
+ 		{
++			if(index>=blocklen) { free(array2); return false; }
+ 			transform[index]++;
+ 			index=tval&0x7fffff;
+ 		}
+ 
++		if(index>=blocklen) { free(array2); return false; }
+ 		tval=transform[index];
+ 		dest[i]=tval>>24;
+ 	}
+ 
+ 	free(array2);
++
++	return true;
+ }
+ 
+ /*void UnsortBWTStuffItX(uint8_t *dest,int blocklen,int firstindex,uint8_t *src,uint32_t *transform)
+Index: unar-1.10.1/XADMaster/BWT.h
+===================================================================
+--- unar-1.10.1.orig/XADMaster/BWT.h
++++ unar-1.10.1/XADMaster/BWT.h
+@@ -2,11 +2,12 @@
+ #define __BWT_H__
+ 
+ #include <stdint.h>
++#include <stdbool.h>
+ 
+ void CalculateInverseBWT(uint32_t *transform,uint8_t *block,int blocklen);
+ void UnsortBWT(uint8_t *dest,uint8_t *src,int blocklen,int firstindex,uint32_t *transformbuf);
+ 
+-void UnsortST4(uint8_t *dest,uint8_t *src,int blocklen,int firstindex,uint32_t *transformbuf);
++bool UnsortST4(uint8_t *dest,uint8_t *src,int blocklen,int firstindex,uint32_t *transformbuf);
+ 
+ typedef struct MTFState
+ {
+Index: unar-1.10.1/XADMaster/CSInputBuffer.h
+===================================================================
+--- unar-1.10.1.orig/XADMaster/CSInputBuffer.h
++++ unar-1.10.1/XADMaster/CSInputBuffer.h
+@@ -56,7 +56,9 @@ void _CSInputFillBuffer(CSInputBuffer *s
+ 
+ static inline void _CSInputBufferRaiseEOF(CSInputBuffer *self)
+ {
+-	[self->parent _raiseEOF];
++	if(self->parent) [self->parent _raiseEOF];
++	else [NSException raise:CSEndOfFileException
++	format:@"Attempted to read past the end of memory buffer."];
+ }
+ 
+ static inline int _CSInputBytesLeftInBuffer(CSInputBuffer *self)
+Index: unar-1.10.1/XADMaster/CSInputBuffer.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/CSInputBuffer.m
++++ unar-1.10.1/XADMaster/CSInputBuffer.m
+@@ -181,6 +181,8 @@ void _CSInputFillBits(CSInputBuffer *sel
+ //		shift-=8;
+ //	}
+ 
++	if(startoffset+numbytes>_CSInputBytesLeftInBuffer(self)) _CSInputBufferRaiseEOF(self);
++
+ 	switch(numbytes)
+ 	{
+ 		case 4:
+Index: unar-1.10.1/XADMaster/LZSS.c
+===================================================================
+--- unar-1.10.1.orig/XADMaster/LZSS.c
++++ unar-1.10.1/XADMaster/LZSS.c
+@@ -3,7 +3,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ 
+-bool InitializeLZSS(LZSS *self,int windowsize)
++bool InitializeLZSS(LZSS *self,size_t windowsize)
+ {
+ 	self->window=malloc(windowsize);
+ 	if(!self->window) return false;
+@@ -28,7 +28,7 @@ void RestartLZSS(LZSS *self)
+ 
+ void CopyBytesFromLZSSWindow(LZSS *self,uint8_t *buffer,int64_t startpos,int length)
+ {
+-	int windowoffs=LZSSWindowOffsetForPosition(self,startpos);
++	size_t windowoffs=LZSSWindowOffsetForPosition(self,startpos);
+ 
+ 	if(windowoffs+length<=LZSSWindowSize(self)) // Request fits inside window
+ 	{
+@@ -36,7 +36,7 @@ void CopyBytesFromLZSSWindow(LZSS *self,
+ 	}
+ 	else // Request wraps around window
+ 	{
+-		int firstpart=LZSSWindowSize(self)-windowoffs;
++		size_t firstpart=LZSSWindowSize(self)-windowoffs;
+ 		memcpy(&buffer[0],&self->window[windowoffs],firstpart);
+ 		memcpy(&buffer[firstpart],&self->window[0],length-firstpart);
+ 	}
+Index: unar-1.10.1/XADMaster/LZSS.h
+===================================================================
+--- unar-1.10.1.orig/XADMaster/LZSS.h
++++ unar-1.10.1/XADMaster/LZSS.h
+@@ -3,17 +3,18 @@
+ 
+ #include <stdint.h>
+ #include <stdbool.h>
++#include <stdlib.h>
+ 
+ typedef struct LZSS
+ {
+ 	uint8_t *window;
+-	int mask;
++	size_t mask;
+ 	int64_t position;
+ } LZSS;
+ 
+ 
+ 
+-bool InitializeLZSS(LZSS *self,int windowsize);
++bool InitializeLZSS(LZSS *self,size_t windowsize);
+ void CleanupLZSS(LZSS *self);
+ void RestartLZSS(LZSS *self);
+ 
+@@ -21,17 +22,17 @@ void RestartLZSS(LZSS *self);
+ 
+ static inline int64_t LZSSPosition(LZSS *self) { return self->position; }
+ 
+-static inline int LZSSWindowMask(LZSS *self) { return self->mask; }
++static inline size_t LZSSWindowMask(LZSS *self) { return self->mask; }
+ 
+-static inline int LZSSWindowSize(LZSS *self)  { return self->mask+1; }
++static inline size_t LZSSWindowSize(LZSS *self)  { return self->mask+1; }
+ 
+ static inline uint8_t *LZSSWindowPointer(LZSS *self)  { return self->window; }
+ 
+-static inline int LZSSWindowOffsetForPosition(LZSS *self,int64_t pos) { return pos&self->mask; }
++static inline size_t LZSSWindowOffsetForPosition(LZSS *self,int64_t pos) { return pos&self->mask; }
+ 
+ static inline uint8_t *LZSSWindowPointerForPosition(LZSS *self,int64_t pos)  { return &self->window[LZSSWindowOffsetForPosition(self,pos)]; }
+ 
+-static inline int CurrentLZSSWindowOffset(LZSS *self) { return LZSSWindowOffsetForPosition(self,self->position); }
++static inline size_t CurrentLZSSWindowOffset(LZSS *self) { return LZSSWindowOffsetForPosition(self,self->position); }
+ 
+ static inline uint8_t *CurrentLZSSWindowPointer(LZSS *self) { return LZSSWindowPointerForPosition(self,self->position); }
+ 
+Index: unar-1.10.1/XADMaster/LZW.c
+===================================================================
+--- unar-1.10.1.orig/XADMaster/LZW.c
++++ unar-1.10.1/XADMaster/LZW.c
+@@ -4,7 +4,9 @@
+ LZW *AllocLZW(int maxsymbols,int reservedsymbols)
+ {
+ 	LZW *self=(LZW *)malloc(sizeof(LZW)+sizeof(LZWTreeNode)*maxsymbols);
+-	if(!self) return 0;
++	if(!self) return NULL;
++
++	if(maxsymbols<256+self->reservedsymbols) return NULL;
+ 
+ 	self->maxsymbols=maxsymbols;
+ 	self->reservedsymbols=reservedsymbols;
+Index: unar-1.10.1/XADMaster/Makefile.common
+===================================================================
+--- unar-1.10.1.orig/XADMaster/Makefile.common
++++ unar-1.10.1/XADMaster/Makefile.common
+@@ -221,15 +221,15 @@ LIBRARY_C_FILES =	BWT.c \
+ 
+ LIBRARY_CXX_FILES =		
+ 
+-XADTEST2_OBJC_FILES =	XADTest2.m
++XADTEST2_OBJC_FILES =	XADTest2.m XADTestUtilities.m
+ 
+-XADTEST3_OBJC_FILES =	XADTest3.m
++XADTEST3_OBJC_FILES =	XADTest3.m XADTestUtilities.m
+ 
+-XADTEST4_OBJC_FILES =	XADTest4.m
++XADTEST4_OBJC_FILES =	XADTest4.m XADTestUtilities.m
+ 
+-XADTEST5_OBJC_FILES =	XADTest5.m
++XADTEST5_OBJC_FILES =	XADTest5.m XADTestUtilities.m
+ 
+-XADTEST6_OBJC_FILES =	XADTest6.m
++XADTEST6_OBJC_FILES =	XADTest6.m XADTestUtilities.m
+ 
+ UNAR_OBJC_FILES =	unar.m
+ 
+Index: unar-1.10.1/XADMaster/PPMd/VariantG.c
+===================================================================
+--- unar-1.10.1.orig/XADMaster/PPMd/VariantG.c
++++ unar-1.10.1/XADMaster/PPMd/VariantG.c
+@@ -2,7 +2,7 @@
+ 
+ #include <string.h>
+ 
+-static void RestartModel(PPMdModelVariantG *self);
++static bool RestartModel(PPMdModelVariantG *self);
+ 
+ static void UpdateModel(PPMdModelVariantG *self);
+ static bool MakeRoot(PPMdModelVariantG *self,unsigned int SkipCount,PPMdState *state);
+@@ -13,7 +13,7 @@ static void DecodeSymbol2VariantG(PPMdCo
+ 
+ static int NumberOfStates(PPMdContext *self) { return self->Flags?0:self->LastStateIndex+1; }
+ 
+-void StartPPMdModelVariantG(PPMdModelVariantG *self,
++bool StartPPMdModelVariantG(PPMdModelVariantG *self,
+ PPMdReadFunction *readfunc,void *inputcontext,
+ PPMdSubAllocator *alloc,int maxorder,bool brimstone)
+ {
+@@ -39,10 +39,10 @@ PPMdSubAllocator *alloc,int maxorder,boo
+ 
+ 	self->DummySEE2Cont.Shift=PERIOD_BITS;
+ 
+-	RestartModel(self);
++	return RestartModel(self);
+ }
+ 
+-static void RestartModel(PPMdModelVariantG *self)
++static bool RestartModel(PPMdModelVariantG *self)
+ {
+ 	InitSubAllocator(self->core.alloc);
+ 
+@@ -52,10 +52,12 @@ static void RestartModel(PPMdModelVarian
+ 	self->core.OrderFall=1;
+ 
+ 	self->MaxContext=NewPPMdContext(&self->core);
++	if(!self->MaxContext) return false;
+ 	self->MaxContext->LastStateIndex=255;
+ 	if(self->Brimstone) self->MaxContext->SummFreq=385;
+ 	else self->MaxContext->SummFreq=257;
+ 	self->MaxContext->States=AllocUnits(self->core.alloc,256/2);
++	if(!self->MaxContext->States) return false;
+ 
+ 	PPMdState *maxstates=PPMdContextStates(self->MaxContext,&self->core);
+ 	for(int i=0;i<256;i++)
+@@ -71,6 +73,7 @@ static void RestartModel(PPMdModelVarian
+ 	{
+ 		//PPMdState firststate={0,1};
+ 		self->MaxContext=NewPPMdContextAsChildOf(&self->core,self->MaxContext,state,/*&firststate*/NULL);
++		if(!self->MaxContext) return false;
+ 		if(i==self->MaxOrder) break;
+ 		state=PPMdContextOneState(self->MaxContext);
+ 		state->Symbol=0;
+@@ -96,6 +99,8 @@ static void RestartModel(PPMdModelVarian
+ 	for(int i=0;i<43;i++)
+ 	for(int k=0;k<8;k++)
+ 	self->SEE2Cont[i][k]=MakeSEE2(4*i+10,3);
++
++	return true;
+ }
+ 
+ 
+@@ -103,6 +108,7 @@ static void RestartModel(PPMdModelVarian
+ int NextPPMdVariantGByte(PPMdModelVariantG *self)
+ {
+ 	if(!self->MinContext) return -1;
++	if(setjmp(self->errorjmp)) return -2;
+ 
+ 	if(NumberOfStates(self->MinContext)!=1) DecodeSymbol1VariantG(self->MinContext,self);
+ 	else DecodeBinSymbolVariantG(self->MinContext,self);
+@@ -272,6 +278,7 @@ static void UpdateModel(PPMdModelVariant
+ 	}
+ 
+ 	self->MedContext=self->MinContext;
++	if(!Successor) longjmp(self->errorjmp,1);
+ 	self->MaxContext=Successor;
+ 	return;
+ 
+@@ -308,6 +315,7 @@ static bool MakeRoot(PPMdModelVariantG *
+ 	do
+ 	{
+ 		context=PPMdContextSuffix(context,&self->core);
++		if(!context) longjmp(self->errorjmp,1);
+ 		if(NumberOfStates(context)!=1)
+ 		{
+ 			state=PPMdContextStates(context,&self->core);
+Index: unar-1.10.1/XADMaster/PPMd/VariantG.h
+===================================================================
+--- unar-1.10.1.orig/XADMaster/PPMd/VariantG.h
++++ unar-1.10.1/XADMaster/PPMd/VariantG.h
+@@ -2,6 +2,7 @@
+ #define __PPMD_VARIANT_G_H__
+ 
+ #include "Context.h"
++#include <setjmp.h>
+ 
+ // PPMd Variant G. Used (slightly modified) by StuffIt X.
+ 
+@@ -15,9 +16,11 @@ typedef struct PPMdModelVariantG
+ 	SEE2Context SEE2Cont[43][8],DummySEE2Cont;
+ 	uint8_t NS2BSIndx[256],NS2Indx[256];
+ 	uint16_t BinSumm[128][16]; // binary SEE-contexts
++
++	jmp_buf errorjmp;
+ } PPMdModelVariantG;
+ 
+-void StartPPMdModelVariantG(PPMdModelVariantG *self,
++bool StartPPMdModelVariantG(PPMdModelVariantG *self,
+ PPMdReadFunction *readfunc,void *inputcontext,
+ PPMdSubAllocator *alloc,int maxorder,bool brimstone);
+ int NextPPMdVariantGByte(PPMdModelVariantG *self);
+Index: unar-1.10.1/XADMaster/RARVirtualMachine.c
+===================================================================
+--- unar-1.10.1.orig/XADMaster/RARVirtualMachine.c
++++ unar-1.10.1/XADMaster/RARVirtualMachine.c
+@@ -46,6 +46,7 @@ void SetRAROpcodeOperand2(RAROpcode *opc
+ 
+ bool IsProgramTerminated(RAROpcode *opcodes,int numopcodes)
+ {
++	if(numopcodes==0) return false;
+ 	return RARInstructionIsUnconditionalJump(opcodes[numopcodes-1].instruction);
+ }
+ 
+Index: unar-1.10.1/XADMaster/StuffItXUtilities.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/StuffItXUtilities.m
++++ unar-1.10.1/XADMaster/StuffItXUtilities.m
+@@ -1,9 +1,11 @@
+ #import "StuffItXUtilities.h"
++#import "XADException.h"
+ 
+ uint64_t ReadSitxP2(CSHandle *fh)
+ {
+ 	int n=1;
+-	while([fh readBitsLE:1]==1) n++;
++	while([fh readBitsLE:1]==1 && n<64) n++;
++	if(n>=64) [XADException raiseDecrunchException];
+ 
+ 	uint64_t value=0;
+ 	uint64_t bit=1;
+Index: unar-1.10.1/XADMaster/XADARCDistillHandle.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADARCDistillHandle.m
++++ unar-1.10.1/XADMaster/XADARCDistillHandle.m
+@@ -47,8 +47,10 @@ static const int offsetcodes[0x40]=
+ 	[super dealloc];
+ }
+ 
+-static void BuildCodeFromTree(XADPrefixCode *code,int *tree,int node,int numnodes)
++static void BuildCodeFromTree(XADPrefixCode *code,int *tree,int node,int numnodes,int depth)
+ {
++	if(depth>64) [XADException raiseDecrunchException];
++
+ 	if(node>=numnodes)
+ 	{
+ 		[code makeLeafWithValue:node-numnodes];
+@@ -56,9 +58,9 @@ static void BuildCodeFromTree(XADPrefixC
+ 	else
+ 	{
+ 		[code startZeroBranch];
+-		BuildCodeFromTree(code,tree,tree[node],numnodes);
++		BuildCodeFromTree(code,tree,tree[node],numnodes,depth+1);
+ 		[code startOneBranch];
+-		BuildCodeFromTree(code,tree,tree[node+1],numnodes);
++		BuildCodeFromTree(code,tree,tree[node+1],numnodes,depth+1);
+ 		[code finishBranches];
+ 	}
+ }
+@@ -68,8 +70,7 @@ static void BuildCodeFromTree(XADPrefixC
+ 	int numnodes=CSInputNextUInt16LE(input);
+ 	int codelength=CSInputNextByte(input);
+ 
+-	analyser_assert(numnodes>=2);
+-
++	if(numnodes<2) [XADException raiseDecrunchException];
+ 	if(numnodes>0x274) [XADException raiseDecrunchException];
+ 
+ 	int nodes[numnodes];
+@@ -79,7 +80,7 @@ static void BuildCodeFromTree(XADPrefixC
+ 	maincode=[XADPrefixCode new];
+ 
+ 	[maincode startBuildingTree];
+-	BuildCodeFromTree(maincode,nodes,numnodes-2,numnodes);
++	BuildCodeFromTree(maincode,nodes,numnodes-2,numnodes,0);
+ }
+ 
+ -(void)expandFromPosition:(off_t)pos
+Index: unar-1.10.1/XADMaster/XADCABParser.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADCABParser.m
++++ unar-1.10.1/XADMaster/XADCABParser.m
+@@ -227,8 +227,10 @@ static CSHandle *FindHandleForName(NSDat
+ 			XADCABBlockReader *blocks=[[file objectForKey:XADSolidObjectKey] objectForKey:@"BlockReader"];
+ 			off_t streamcompsize=[blocks compressedLength];
+ 			off_t streamuncompsize=[blocks uncompressedLength];
++			off_t compsize=0;
++			if(streamuncompsize!=0) compsize=filesize*streamcompsize/streamuncompsize;
+ 
+-			[file setObject:[NSNumber numberWithLongLong:filesize*streamcompsize/streamuncompsize] forKey:XADCompressedSizeKey];
++			[file setObject:[NSNumber numberWithLongLong:compsize] forKey:XADCompressedSizeKey];
+ 
+ 			[self addEntryWithDictionary:file];
+ 			[files removeObjectAtIndex:0];
+Index: unar-1.10.1/XADMaster/XADCFBFParser.h
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADCFBFParser.h
++++ unar-1.10.1/XADMaster/XADCFBFParser.h
+@@ -8,6 +8,7 @@
+ 
+ 	int numsectors,numminisectors;
+ 	uint32_t *sectable,*minisectable;
++	bool *secvisitedtable;
+ }
+ 
+ +(int)requiredHeaderSize;
+Index: unar-1.10.1/XADMaster/XADCFBFParser.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADCFBFParser.m
++++ unar-1.10.1/XADMaster/XADCFBFParser.m
+@@ -36,7 +36,6 @@
+ {
+ 	CSHandle *fh=[self handle];
+ 
+-
+ 	// Read header
+ 
+ 	[fh skipBytes:30];
+@@ -63,6 +62,7 @@
+ 
+ 	numsectors=numtablesecs*idspersec;
+ 	sectable=malloc(numsectors*sizeof(uint32_t));
++	secvisitedtable=calloc(numsectors*sizeof(bool),1);
+ 
+ 	for(int i=0;i<numtablesecs;i++)
+ 	{
+@@ -109,6 +109,8 @@
+ 	uint32_t dirsec=firstdirsec;
+ 	while(dirsec!=0xfffffffe)
+ 	{
++		if(secvisitedtable[dirsec]) [XADException raiseIllegalDataException];
++		secvisitedtable[dirsec]=true;
+ 		[self seekToSector:dirsec];
+ 		for(int i=0;i<secsize;i+=128)
+ 		{
+Index: unar-1.10.1/XADMaster/XADCompressHandle.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADCompressHandle.m
++++ unar-1.10.1/XADMaster/XADCompressHandle.m
+@@ -13,7 +13,11 @@
+ 	if((self=[super initWithInputBufferForHandle:handle length:length]))
+ 	{
+ 		blockmode=(compressflags&0x80)!=0;
+-		lzw=AllocLZW(1<<(compressflags&0x1f),blockmode?1:0);
++
++		int maxsymbols=1<<(compressflags&0x1f);
++		if(maxsymbols<=256) [XADException raiseDecrunchException];
++
++		lzw=AllocLZW(maxsymbols,blockmode?1:0);
+ 	}
+ 	return self;
+ }
+Index: unar-1.10.1/XADMaster/XADCrunchHandles.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADCrunchHandles.m
++++ unar-1.10.1/XADMaster/XADCrunchHandles.m
+@@ -268,6 +268,7 @@ static xadUINT8 CRUNCHdecode(struct Crun
+   stackp = cd->stack;
+   while(ep > cd->table + 255) /* i.e. code not atomic */
+   {
++    if(stackp - cd->stack >= sizeof(cd->stack)) return 0; // TODO: Should throw error
+     *(stackp++) = ep->suffix;
+     ep = cd->table + (ep->predecessor&0xFFF);
+   }
+@@ -294,7 +295,7 @@ xadINT32 CRUNCHuncrunch(struct xadInOut
+     if(mode)
+     {
+       xadUINT8 *stackp, *stacke; /* byte string stack pointer */
+-      struct CrunchEntry *ep;
++      struct CrunchEntry *ep = NULL;
+ 
+       stackp = cd->stack;
+       stacke = cd->stack+CRUNCH_TABLE_SIZE-2;
+@@ -320,7 +321,23 @@ xadINT32 CRUNCHuncrunch(struct xadInOut
+         if(pred == 0) /* end-of-file code */
+           break; /* all lzw codes read */
+ 
+-        ep = cd->table + (cd->table[pred].predecessor == CRUNCH_EMPTY ? cd->lastpr : pred);
++        if(pred >= CRUNCH_TABLE_SIZE)
++        {
++          cd->io->xio_Error = XADERR_DECRUNCH;
++          break;
++        }
++
++		if(cd->table[pred].predecessor == CRUNCH_EMPTY)
++		{
++			pred = cd->lastpr;
++			if(pred >= CRUNCH_TABLE_SIZE)
++			{
++				cd->io->xio_Error = XADERR_DECRUNCH;
++				break;
++			}
++		}
++
++        ep = cd->table + pred;
+ 
+         /* walk back the lzw table starting with this code */
+         while(ep->predecessor < CRUNCH_TABLE_SIZE)
+Index: unar-1.10.1/XADMaster/XADLZXHandle.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADLZXHandle.m
++++ unar-1.10.1/XADMaster/XADLZXHandle.m
+@@ -152,6 +152,7 @@
+ 				length=(lengths[i]+17-newval)%17;
+ 			}
+ 
++			if(i+n>count) [XADException raiseDecrunchException];
+ 			for(int j=0;j<n;j++) lengths[i+j]=length;
+ 			i+=n;
+ 		}
+Index: unar-1.10.1/XADMaster/XADLZXParser.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADLZXParser.m
++++ unar-1.10.1/XADMaster/XADLZXParser.m
+@@ -133,10 +133,10 @@
+ 			NSMutableDictionary *dict;
+ 			while((dict=[enumerator nextObject]))
+ 			{
++				off_t compsize=0;
++				if(solidsize!=0) compsize=([[dict objectForKey:XADFileSizeKey] longLongValue]*(off_t)compsize)/solidsize;
+ 				[dict setObject:solidobj forKey:XADSolidObjectKey];
+-				[dict setObject:[NSNumber numberWithLongLong:
+-				([[dict objectForKey:XADFileSizeKey] longLongValue]*(off_t)compsize)/solidsize]
+-				forKey:XADCompressedSizeKey];
++				[dict setObject:[NSNumber numberWithLongLong:compsize] forKey:XADCompressedSizeKey];
+ 				[self addEntryWithDictionary:dict];
+ 			}
+ 
+Index: unar-1.10.1/XADMaster/XADPPMdHandles.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADPPMdHandles.m
++++ unar-1.10.1/XADMaster/XADPPMdHandles.m
+@@ -1,4 +1,5 @@
+ #import "XADPPMdHandles.h"
++#import "XADException.h"
+ 
+ 
+ 
+@@ -26,13 +27,20 @@
+ 	[super dealloc];
+ }
+ 
+--(void)resetByteStream { StartPPMdModelVariantG(&model,(PPMdReadFunction *)CSInputNextByte,input,&alloc->core,max,NO); }
++-(void)resetByteStream
++{
++	if(!StartPPMdModelVariantG(&model,(PPMdReadFunction *)CSInputNextByte,input,&alloc->core,max,NO))
++	{
++		[XADException raiseDecrunchException];
++	}
++}
+ 
+ -(uint8_t)produceByteAtOffset:(off_t)pos
+ {
+ 	int byte=NextPPMdVariantGByte(&model);
+-	if(byte<0) CSByteStreamEOF(self);
+-	return byte;
++	if(byte==-1) CSByteStreamEOF(self);
++	else if(byte==-2) { [XADException raiseDecrunchException]; return 0; }
++	else return byte;
+ }
+ 
+ @end
+@@ -101,7 +109,11 @@
+ 	[super dealloc];
+ }
+ 
+--(void)resetByteStream { StartPPMdModelVariantI(&model,(PPMdReadFunction *)CSInputNextByte,input,alloc,max,method); }
++-(void)resetByteStream
++{
++	if(max<2) [XADException raiseNotSupportedException];
++	StartPPMdModelVariantI(&model,(PPMdReadFunction *)CSInputNextByte,input,alloc,max,method);
++}
+ 
+ -(uint8_t)produceByteAtOffset:(off_t)pos
+ {
+@@ -138,7 +150,13 @@
+ 	[super dealloc];
+ }
+ 
+--(void)resetByteStream { StartPPMdModelVariantG(&model,(PPMdReadFunction *)CSInputNextByte,input,&alloc->core,max,YES); }
++-(void)resetByteStream
++{
++	if(!StartPPMdModelVariantG(&model,(PPMdReadFunction *)CSInputNextByte,input,&alloc->core,max,YES))
++	{
++		[XADException raiseDecrunchException];
++	}
++}
+ 
+ -(uint8_t)produceByteAtOffset:(off_t)pos
+ {
+Index: unar-1.10.1/XADMaster/XADPrefixCode.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADPrefixCode.m
++++ unar-1.10.1/XADMaster/XADPrefixCode.m
+@@ -341,7 +341,11 @@ static void MakeTable(XADPrefixCode *cod
+ {
+ 	int currtablesize=1<<(maxdepth-depth);
+ 
+-	if(IsLeafNode(code,node))
++	if(IsInvalidNode(code,node))
++	{
++		for(int i=0;i<currtablesize;i++) table[i].length=-1;
++	}
++	else if(IsLeafNode(code,node))
+ 	{
+ 		for(int i=0;i<currtablesize;i++)
+ 		{
+@@ -349,10 +353,6 @@ static void MakeTable(XADPrefixCode *cod
+ 			table[i].value=LeafValue(code,node);
+ 		}
+ 	}
+-	else if(IsInvalidNode(code,node))
+-	{
+-		for(int i=0;i<currtablesize;i++) table[i].length=-1;
+-	}
+ 	else
+ 	{
+ 		if(depth==maxdepth)
+@@ -373,7 +373,11 @@ static void MakeTableLE(XADPrefixCode *c
+ 	int currtablesize=1<<(maxdepth-depth);
+ 	int currstride=1<<depth;
+ 
+-	if(IsLeafNode(code,node))
++	if(IsInvalidNode(code,node))
++	{
++		for(int i=0;i<currtablesize;i++) table[i*currstride].length=-1;
++	}
++	else if(IsLeafNode(code,node))
+ 	{
+ 		for(int i=0;i<currtablesize;i++)
+ 		{
+@@ -381,10 +385,6 @@ static void MakeTableLE(XADPrefixCode *c
+ 			table[i*currstride].value=LeafValue(code,node);
+ 		}
+ 	}
+-	else if(IsInvalidNode(code,node))
+-	{
+-		for(int i=0;i<currtablesize;i++) table[i*currstride].length=-1;
+-	}
+ 	else
+ 	{
+ 		if(depth==maxdepth)
+Index: unar-1.10.1/XADMaster/XADRAR30Handle.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADRAR30Handle.m
++++ unar-1.10.1/XADMaster/XADRAR30Handle.m
+@@ -576,7 +576,7 @@
+ 	if(isnew)
+ 	{
+ 		int length=CSInputNextRARVMNumber(filterinput);
+-		if(length==0||length>0x10000) [XADException raiseIllegalDataException];
++		if(length<=0||length>0x10000) [XADException raiseIllegalDataException];
+ 
+ 		uint8_t bytecode[length];
+ 		for(int i=0;i<length;i++) bytecode[i]=CSInputNextBitString(filterinput,8);
+Index: unar-1.10.1/XADMaster/XADRAR50Handle.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADRAR50Handle.m
++++ unar-1.10.1/XADMaster/XADRAR50Handle.m
+@@ -20,7 +20,7 @@ static uint32_t ReadFilterInteger(CSInpu
+ 		[self setInputBuffer:buf];
+ 
+ 		uint64_t dictsize=[[dict objectForKey:@"RAR5DictionarySize"] unsignedLongLongValue];
+-		InitializeLZSS(&lzss,dictsize);
++		if(!InitializeLZSS(&lzss,dictsize)) [XADException raiseOutOfMemoryException];
+ 
+ 		maincode=nil;
+ 		offsetcode=nil;
+Index: unar-1.10.1/XADMaster/XADRPMParser.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADRPMParser.m
++++ unar-1.10.1/XADMaster/XADRPMParser.m
+@@ -17,7 +17,7 @@
+ 	return NO;
+ }
+ 
+-static int FindStringLength(const uint8_t *buffer,int size,int offset)
++static int FindStringLength(const uint8_t *buffer,size_t size,size_t offset)
+ {
+ 	int len=0;
+ 	while(offset+len<size&&buffer[offset+len]) len++;
+@@ -91,6 +91,7 @@ static int FindStringLength(const uint8_
+ 		}
+ 
+ 		int headentries=[fh readUInt32BE];
++		if(headentries>=0x10000000) [XADException raiseDecrunchException];
+ 		int headbytes=[fh readUInt32BE];
+ 
+ 		NSData *entrydata=[fh readDataOfLength:headentries*16];
+@@ -99,7 +100,6 @@ static int FindStringLength(const uint8_
+ 		const uint8_t *entries=[entrydata bytes];
+ 		const uint8_t *storage=[storagedata bytes];
+ 
+-
+ 		for(int i=0;i<headentries;i++)
+ 		{
+ 			uint32_t tag=CSUInt32BE(entries+i*16+0);
+Index: unar-1.10.1/XADMaster/XADSqueezeHandle.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADSqueezeHandle.m
++++ unar-1.10.1/XADMaster/XADSqueezeHandle.m
+@@ -24,20 +24,26 @@
+ }
+ 
+ 
+-static void BuildCodeFromTree(XADPrefixCode *code,int *tree,int node,int numnodes)
++static void BuildCodeFromTree(XADPrefixCode *code,int *tree,int node,int numnodes,int depth)
+ {
++	if(depth>64) [XADException raiseDecrunchException];
++
+ 	if(node<0)
+ 	{
+ 		[code makeLeafWithValue:-(node+1)];
+ 	}
+-	else
++	else if(2*node+1<numnodes)
+ 	{
+ 		[code startZeroBranch];
+-		BuildCodeFromTree(code,tree,tree[2*node],numnodes);
++		BuildCodeFromTree(code,tree,tree[2*node],numnodes,depth+1);
+ 		[code startOneBranch];
+-		BuildCodeFromTree(code,tree,tree[2*node+1],numnodes);
++		BuildCodeFromTree(code,tree,tree[2*node+1],numnodes,depth+1);
+ 		[code finishBranches];
+ 	}
++	else
++	{
++		[XADException raiseDecrunchException];
++	}
+ }
+ 
+ -(void)resetByteStream
+@@ -54,7 +60,7 @@ static void BuildCodeFromTree(XADPrefixC
+ 	code=[XADPrefixCode new];
+ 
+ 	[code startBuildingTree];
+-	BuildCodeFromTree(code,nodes,0,numnodes);
++	BuildCodeFromTree(code,nodes,0,numnodes,0);
+ }
+ 
+ -(uint8_t)produceByteAtOffset:(off_t)pos
+Index: unar-1.10.1/XADMaster/XADStuffItSplitParser.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADStuffItSplitParser.m
++++ unar-1.10.1/XADMaster/XADStuffItSplitParser.m
+@@ -129,7 +129,7 @@
+ 		NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:
+ 			[self XADPathWithData:namedata separators:XADNoPathSeparator],XADFileNameKey,
+ 			[NSNumber numberWithLongLong:rsrclength],XADFileSizeKey,
+-			[NSNumber numberWithLongLong:curroffset*rsrclength/(datalength+rsrclength)],XADCompressedSizeKey,
++			[NSNumber numberWithLongLong:curroffset*rsrclength/((off_t)datalength+(off_t)rsrclength)],XADCompressedSizeKey,
+ 			[NSNumber numberWithLongLong:0],XADSkipOffsetKey,
+ 			[NSNumber numberWithLongLong:rsrclength],XADSkipLengthKey,
+ 			[NSNumber numberWithUnsignedInt:type],XADFileTypeKey,
+@@ -150,7 +150,7 @@
+ 		NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:
+ 			[self XADPathWithData:namedata separators:XADNoPathSeparator],XADFileNameKey,
+ 			[NSNumber numberWithLongLong:datalength],XADFileSizeKey,
+-			[NSNumber numberWithLongLong:datalength?curroffset*datalength/(datalength+rsrclength):0],XADCompressedSizeKey,
++			[NSNumber numberWithLongLong:datalength?curroffset*datalength/((off_t)datalength+(off_t)rsrclength):0],XADCompressedSizeKey,
+ 			[NSNumber numberWithLongLong:rsrclength],XADSkipOffsetKey,
+ 			[NSNumber numberWithLongLong:datalength],XADSkipLengthKey,
+ 			[NSNumber numberWithUnsignedInt:type],XADFileTypeKey,
+Index: unar-1.10.1/XADMaster/XADStuffItXBlockHandle.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADStuffItXBlockHandle.m
++++ unar-1.10.1/XADMaster/XADStuffItXBlockHandle.m
+@@ -1,5 +1,6 @@
+ #import "XADStuffItXBlockHandle.h"
+ #import "StuffItXUtilities.h"
++#import "XADException.h"
+ 
+ @implementation XADStuffItXBlockHandle
+ 
+@@ -27,13 +28,14 @@
+ 
+ -(int)produceBlockAtOffset:(off_t)pos
+ {
+-	int size=(int)ReadSitxP2(parent);
++	unsigned int size=(unsigned int)ReadSitxP2(parent);
+ 	if(!size) return -1;
+ 
+ 	if(size>currsize)
+ 	{
+ 		free(buffer);
+ 		buffer=malloc(size);
++		if(!buffer) [XADException raiseOutOfMemoryException];
+ 		currsize=size;
+ 		[self setBlockPointer:buffer];
+ 	}
+Index: unar-1.10.1/XADMaster/XADStuffItXIronHandle.h
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADStuffItXIronHandle.h
++++ unar-1.10.1/XADMaster/XADStuffItXIronHandle.h
+@@ -8,9 +8,9 @@
+ 
+ 	int st4transform,fancymtf;
+ 
+-	int maxfreq1,maxfreq2,maxfreq3;
+-	int byteshift1,byteshift2,byteshift3;
+-	int countshift1,countshift2,countshift3;
++	unsigned int maxfreq1,maxfreq2,maxfreq3;
++	unsigned int byteshift1,byteshift2,byteshift3;
++	unsigned int countshift1,countshift2,countshift3;
+ }
+ 
+ -(id)initWithHandle:(CSHandle *)handle length:(off_t)length;
+Index: unar-1.10.1/XADMaster/XADStuffItXIronHandle.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADStuffItXIronHandle.m
++++ unar-1.10.1/XADMaster/XADStuffItXIronHandle.m
+@@ -59,12 +59,12 @@ static int NextBitWithDoubleWeights(Carr
+ 	maxfreq2=1<<CSInputNextSitxP2(input);
+ 	maxfreq3=1<<CSInputNextSitxP2(input);
+ 
+-	byteshift1=(int)CSInputNextSitxP2(input);
+-	byteshift2=(int)CSInputNextSitxP2(input);
+-	byteshift3=(int)CSInputNextSitxP2(input);
+-	countshift1=(int)CSInputNextSitxP2(input);
+-	countshift2=(int)CSInputNextSitxP2(input);
+-	countshift3=(int)CSInputNextSitxP2(input);
++	byteshift1=(unsigned int)CSInputNextSitxP2(input);
++	byteshift2=(unsigned int)CSInputNextSitxP2(input);
++	byteshift3=(unsigned int)CSInputNextSitxP2(input);
++	countshift1=(unsigned int)CSInputNextSitxP2(input);
++	countshift2=(unsigned int)CSInputNextSitxP2(input);
++	countshift3=(unsigned int)CSInputNextSitxP2(input);
+ }
+ 
+ -(int)produceBlockAtOffset:(off_t)pos
+@@ -73,12 +73,13 @@ static int NextBitWithDoubleWeights(Carr
+ 
+ 	if(CSInputNextBitLE(input)==1) return -1;
+ 
+-	int blocksize=(int)CSInputNextSitxP2(input);
++	unsigned int blocksize=(unsigned int)CSInputNextSitxP2(input);
+ 
+ 	if(blocksize>currsize)
+ 	{
+ 		free(block);
+ 		block=malloc(blocksize*6);
++		if(!block) [XADException raiseOutOfMemoryException];
+ 		sorted=block+blocksize;
+ 		table=(uint32_t *)(block+2*blocksize);
+ 		currsize=blocksize;
+@@ -86,7 +87,8 @@ static int NextBitWithDoubleWeights(Carr
+ 
+ 	if(CSInputNextBitLE(input)==0) // compressed
+ 	{
+-		int firstindex=(int)CSInputNextSitxP2(input);
++		unsigned int firstindex=(int)CSInputNextSitxP2(input);
++		if(firstindex>=blocksize) [XADException raiseDecrunchException];
+ 
+ 		CSInputSkipToByteBoundary(input);
+ 
+@@ -94,7 +96,7 @@ static int NextBitWithDoubleWeights(Carr
+ 
+ 		if(st4transform)
+ 		{
+-			UnsortST4(block,sorted,blocksize,firstindex,table);
++			if(!UnsortST4(block,sorted,blocksize,firstindex,table)) [XADException raiseDecrunchException];
+ 		}
+ 		else
+ 		{
+Index: unar-1.10.1/XADMaster/XADStuffItXParser.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADStuffItXParser.m
++++ unar-1.10.1/XADMaster/XADStuffItXParser.m
+@@ -16,7 +16,7 @@
+ 
+ typedef struct StuffItXElement
+ {
+-	int something,type;
++	unsigned int something,type;
+ 	int64_t attribs[10];
+ 	int64_t alglist[6];
+ 	int64_t alglist3_extra;
+@@ -36,11 +36,11 @@ static void ReadElement(CSHandle *fh,Stu
+ 	element->alglist3_extra=-1;
+ 
+ 	element->something=[fh readBitsLE:1];
+-	element->type=(int)ReadSitxP2(fh);
++	element->type=(unsigned int)ReadSitxP2(fh);
+ 
+ 	for(;;)
+ 	{
+-		int type=(int)ReadSitxP2(fh);
++		unsigned int type=(unsigned int)ReadSitxP2(fh);
+ 		if(type==0) break;
+ 		uint64_t value=ReadSitxP2(fh);
+ 		if(type<=10) element->attribs[type-1]=value;
+@@ -49,7 +49,7 @@ static void ReadElement(CSHandle *fh,Stu
+ 
+ 	for(;;)
+ 	{
+-		int type=(int)ReadSitxP2(fh);
++		unsigned int type=(unsigned int)ReadSitxP2(fh);
+ 		if(type==0) break;
+ 		uint64_t value=ReadSitxP2(fh);
+ 		if(type<=6) element->alglist[type-1]=value;
+@@ -120,7 +120,9 @@ static CSHandle *HandleForElement(XADStu
+ 
+ 		case 0: // Brimstone/PPMd
+ 		{
+-			int allocsize=1<<[handle readUInt8];
++			int exponent=[handle readUInt8];
++			if(exponent>31) [XADException raiseDecrunchException];
++			int allocsize=1<<exponent;
+ 			int order=[handle readUInt8];
+ 			handle=[[[XADStuffItXBrimstoneHandle alloc] initWithHandle:handle
+ 			length:uncompressedlength maxOrder:order subAllocSize:allocsize] autorelease];
+@@ -614,7 +616,7 @@ static CSHandle *HandleForElement(XADStu
+ 	{
+ 		for(;;)
+ 		{
+-			int key=(int)ReadSitxP2(fh);
++			unsigned int key=(unsigned int)ReadSitxP2(fh);
+ 			if(!key) break;
+ 
+ 			switch(key)
+@@ -673,7 +675,7 @@ static CSHandle *HandleForElement(XADStu
+ 
+ 				case 7:
+ 				{
+-					int val=(int)ReadSitxP2(fh);
++					unsigned int val=(unsigned int)ReadSitxP2(fh);
+ 					NSLog(@"7: %d",val);
+ 				}
+ 				break;
+@@ -693,7 +695,7 @@ static CSHandle *HandleForElement(XADStu
+ 
+ 				case 10:
+ 				{
+-					int num=(int)ReadSitxP2(fh);
++					unsigned int num=(unsigned int)ReadSitxP2(fh);
+ 					for(int i=0;i<num;i++)
+ 					NSLog(@"10: %@",[self XADStringWithData:ReadSitxString(fh)]);
+ 				}
+Index: unar-1.10.1/XADMaster/XADTest2.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADTest2.m
++++ unar-1.10.1/XADMaster/XADTest2.m
+@@ -1,4 +1,5 @@
+ #import "XADArchiveParser.h"
++#import "XADTestUtilities.h"
+ #import "CRC.h"
+ 
+ @interface TestDelegate:NSObject
+@@ -60,27 +61,13 @@
+ 
+ @end
+ 
+-NSString *FigureOutPassword(NSString *filename)
+-{
+-	const char *envpass=getenv("XADTestPassword");
+-	if(envpass) return [NSString stringWithUTF8String:envpass];
+-
+-	NSArray *matches=[filename substringsCapturedByPattern:@"_pass_(.+)\\.[pP][aA][rR][tT][0-9]+\\.[rR][aA][rR]$"];
+-	if(matches) return [matches objectAtIndex:1];
+-
+-	matches=[filename substringsCapturedByPattern:@"_pass_(.+)\\.[^.]+$"];
+-	if(matches) return [matches objectAtIndex:1];
+-
+-	return nil;
+-}
+-
+ int main(int argc,char **argv)
+ {
+-	for(int i=1;i<argc;i++)
++	NSString *filename;
++	NSEnumerator *enumerator=[FilesForArgs(argc,argv) objectEnumerator];
++	while(filename=[enumerator nextObject])
+ 	{
+ 		NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
+-
+-		NSString *filename=[NSString stringWithUTF8String:argv[i]];
+ 		XADArchiveParser *parser=[XADArchiveParser archiveParserForPath:filename];
+ 
+ 		NSLog(@"Parsing file \"%@\" with parser \"%@\".",filename,[parser formatName]);
+Index: unar-1.10.1/XADMaster/XADTest3.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADTest3.m
++++ unar-1.10.1/XADMaster/XADTest3.m
+@@ -1,4 +1,5 @@
+ #import "XADArchiveParser.h"
++#import "XADTestUtilities.h"
+ 
+ NSString *EscapeString(NSString *str)
+ {
+@@ -126,29 +127,16 @@ NSString *EscapeString(NSString *str)
+ 
+ @end
+ 
+-NSString *FigureOutPassword(NSString *filename)
+-{
+-	const char *envpass=getenv("XADTestPassword");
+-	if(envpass) return [NSString stringWithUTF8String:envpass];
+-
+-	NSArray *matches=[filename substringsCapturedByPattern:@"_pass_(.+)\\.[pP][aA][rR][tT][0-9]+\\.[rR][aA][rR]$"];
+-	if(matches) return [matches objectAtIndex:1];
+-
+-	matches=[filename substringsCapturedByPattern:@"_pass_(.+)\\.[^.]+$"];
+-	if(matches) return [matches objectAtIndex:1];
+-
+-	return nil;
+-}
+-
+ int main(int argc,char **argv)
+ {
+-	for(int i=1;i<argc;i++)
++	NSString *filename;
++	NSEnumerator *enumerator=[FilesForArgs(argc,argv) objectEnumerator];
++	while(filename=[enumerator nextObject])
+ 	{
+ 		NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
+ 
+-		printf("Testing %s...\n",argv[i]);
++		printf("Testing %s...\n",[filename UTF8String]);
+ 
+-		NSString *filename=[NSString stringWithUTF8String:argv[i]];
+ 		XADArchiveParser *parser=[XADArchiveParser archiveParserForPath:filename];
+ 
+ 		[parser setDelegate:[[[ArchiveTester alloc] initWithIndentLevel:2] autorelease]];
+Index: unar-1.10.1/XADMaster/XADTest4.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADTest4.m
++++ unar-1.10.1/XADMaster/XADTest4.m
+@@ -1,4 +1,5 @@
+ #import "XADArchiveParser.h"
++#import "XADTestUtilities.h"
+ 
+ @interface ArchiveTester:NSObject
+ {
+@@ -76,27 +77,15 @@
+ 
+ @end
+ 
+-NSString *FigureOutPassword(NSString *filename)
+-{
+-	const char *envpass=getenv("XADTestPassword");
+-	if(envpass) return [NSString stringWithUTF8String:envpass];
+-
+-	NSArray *matches=[filename substringsCapturedByPattern:@"_pass_(.+)\\.[pP][aA][rR][tT][0-9]+\\.[rR][aA][rR]$"];
+-	if(matches) return [matches objectAtIndex:1];
+-
+-	matches=[filename substringsCapturedByPattern:@"_pass_(.+)\\.[^.]+$"];
+-	if(matches) return [matches objectAtIndex:1];
+-
+-	return nil;
+-}
+-
+ int main(int argc,char **argv)
+ {
+-	for(int i=1;i<argc;i++)
++	NSString *filename;
++	NSEnumerator *enumerator=[FilesForArgs(argc,argv) objectEnumerator];
++	while(filename=[enumerator nextObject])
+ 	{
+ 		NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
+ 
+-		printf("Testing %s...\n",argv[i]);
++		printf("Testing %s...\n",[filename UTF8String]);
+ 
+ 		NSString *filename=[NSString stringWithUTF8String:argv[i]];
+ 		XADArchiveParser *parser=[XADArchiveParser archiveParserForPath:filename];
+Index: unar-1.10.1/XADMaster/XADTest5.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADTest5.m
++++ unar-1.10.1/XADMaster/XADTest5.m
+@@ -1,4 +1,5 @@
+ #import "XADArchiveParser.h"
++#import "XADTestUtilities.h"
+ #import "CSFileHandle.h"
+ #import "XADRegex.h"
+ 
+@@ -34,20 +35,6 @@ off_t correctlength;
+ 
+ 
+ 
+-NSString *FigureOutPassword(NSString *filename)
+-{
+-	const char *envpass=getenv("XADTestPassword");
+-	if(envpass) return [NSString stringWithUTF8String:envpass];
+-
+-	NSArray *matches=[filename substringsCapturedByPattern:@"_pass_(.+)\\.[pP][aA][rR][tT][0-9]+\\.[rR][aA][rR]$"];
+-	if(matches) return [matches objectAtIndex:1];
+-
+-	matches=[filename substringsCapturedByPattern:@"_pass_(.+)\\.[^.]+$"];
+-	if(matches) return [matches objectAtIndex:1];
+-
+-	return nil;
+-}
+-
+ int main(int argc,char **argv)
+ {
+ 	NSAutoreleasePool *pool=[NSAutoreleasePool new];
+Index: unar-1.10.1/XADMaster/XADTest6.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADTest6.m
++++ unar-1.10.1/XADMaster/XADTest6.m
+@@ -1,4 +1,5 @@
+ #import "XADArchiveParser.h"
++#import "XADTestUtilities.h"
+ #import "NSStringPrinting.h"
+ 
+ NSMutableArray *reasons;
+@@ -56,30 +57,16 @@ findsFileInterestingForReason:(NSString
+ 
+ @end
+ 
+-NSString *FigureOutPassword(NSString *filename)
+-{
+-	const char *envpass=getenv("XADTestPassword");
+-	if(envpass) return [NSString stringWithUTF8String:envpass];
+-
+-	NSArray *matches=[filename substringsCapturedByPattern:@"_pass_(.+)\\.[pP][aA][rR][tT][0-9]+\\.[rR][aA][rR]$"];
+-	if(matches) return [matches objectAtIndex:1];
+-
+-	matches=[filename substringsCapturedByPattern:@"_pass_(.+)\\.[^.]+$"];
+-	if(matches) return [matches objectAtIndex:1];
+-
+-	return nil;
+-}
+-
+ int main(int argc,char **argv)
+ {
+ 	int res=0;
+ 
+-	for(int i=1;i<argc;i++)
++	NSString *filename;
++	NSEnumerator *enumerator=[FilesForArgs(argc,argv) objectEnumerator];
++	while(filename=[enumerator nextObject])
+ 	{
+ 		NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
+ 
+-		NSString *filename=[NSString stringWithUTF8String:argv[i]];
+-
+ 		reasons=[NSMutableArray array];
+ 		failed=0;
+ 
+Index: unar-1.10.1/XADMaster/XADTestUtilities.h
+===================================================================
+--- /dev/null
++++ unar-1.10.1/XADMaster/XADTestUtilities.h
+@@ -0,0 +1,4 @@
++#import <Foundation/Foundation.h>
++
++NSString *FigureOutPassword(NSString *filename);
++NSArray *FilesForArgs(int argc,char **argv);
+Index: unar-1.10.1/XADMaster/XADTestUtilities.m
+===================================================================
+--- /dev/null
++++ unar-1.10.1/XADMaster/XADTestUtilities.m
+@@ -0,0 +1,58 @@
++#import "XADTestUtilities.h"
++#import "XADRegex.h"
++
++NSString *FigureOutPassword(NSString *filename)
++{
++	const char *envpass=getenv("XADTestPassword");
++	if(envpass) return [NSString stringWithUTF8String:envpass];
++
++	NSArray *matches=[filename substringsCapturedByPattern:@"_pass_(.+)\\.[pP][aA][rR][tT][0-9]+\\.[rR][aA][rR]$"];
++	if(matches) return [matches objectAtIndex:1];
++
++	matches=[filename substringsCapturedByPattern:@"_pass_(.+)\\.[^.]+$"];
++	if(matches) return [matches objectAtIndex:1];
++
++	return nil;
++}
++
++NSArray *FilesForArgs(int argc,char **argv)
++{
++	NSMutableArray *files=[NSMutableArray array];
++
++	for(int i=1;i<argc;i++)
++	{
++		NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
++
++		NSString *filename=[NSString stringWithUTF8String:argv[i]];
++		NSURL *url=[NSURL fileURLWithPath:filename];
++
++		NSNumber *isdir;
++		[url getResourceValue:&isdir forKey:NSURLIsDirectoryKey error:NULL];
++		if(isdir.boolValue)
++		{
++			NSDirectoryEnumerator *enumerator=[[NSFileManager defaultManager] enumeratorAtURL:url
++			includingPropertiesForKeys:@[]
++			options:NSDirectoryEnumerationSkipsHiddenFiles
++			errorHandler:nil];
++			NSURL *url;
++			while(url=[enumerator nextObject])
++			{
++				NSNumber *isfile;
++				[url getResourceValue:&isfile forKey:NSURLIsRegularFileKey error:NULL];
++				if(isfile.boolValue)
++				{
++					[files addObject:url.path];
++				}
++			}
++		}
++		else
++		{
++			[files addObject:filename];
++		}
++
++
++		[pool release];
++	}
++
++	return [NSArray arrayWithArray:files];
++}
+Index: unar-1.10.1/XADMaster/XADZipParser.m
+===================================================================
+--- unar-1.10.1.orig/XADMaster/XADZipParser.m
++++ unar-1.10.1/XADMaster/XADZipParser.m
+@@ -128,13 +128,13 @@
+ 	off_t centraloffs=end-numbytes+pos;
+ 
+ 	// Find zip64 end of central directory locator
+-	while(pos>=0)
++	if(pos>=20 && buf[pos-20]=='P' && buf[pos-19]=='K' && buf[pos-18]==6 && buf[pos-17]==7)
+ 	{
+-		if(buf[pos]=='P'&&buf[pos+1]=='K'&&buf[pos+2]==6&&buf[pos+3]==7) break;
+-		pos--;
++		// Found a zip64 end of central directory locator.
++		off_t zip64offs=end-numbytes+pos-20;
++		[self parseWithCentralDirectoryAtOffset:centraloffs zip64Offset:zip64offs];
+ 	}
+-
+-	if(pos<0)
++	else
+ 	{
+ 		// Could not find a zip64 end of central directory locator.
+ 		if(end>0x100000000)
+@@ -150,12 +150,6 @@
+ 			[self parseWithCentralDirectoryAtOffset:centraloffs zip64Offset:-1];
+ 		}
+ 	}
+-	else
+-	{
+-		// Found a zip64 end of central directory locator.
+-		off_t zip64offs=end-numbytes+pos;
+-		[self parseWithCentralDirectoryAtOffset:centraloffs zip64Offset:zip64offs];
+-	}
+ }
+ 
+ 
+Index: unar-1.10.1/XADMaster/libxad/clients/AMPK.c
+===================================================================
+--- unar-1.10.1.orig/XADMaster/libxad/clients/AMPK.c
++++ unar-1.10.1/XADMaster/libxad/clients/AMPK.c
+@@ -614,7 +614,7 @@ static xadINT32 ARCunsqueeze(struct xadI
+       {
+         /* follow bit stream in tree to a leaf */
+         i = 0;
+-        while(i >= 0 && !io->xio_Error)
++        while(i >= 0 && 2 * i + 1 < numnodes && !io->xio_Error)
+           i = node[2*i + xadIOGetBitsLow(io, 1)];
+ 
+         i = -(i + 1); /* decode fake node index to original data value */
+@@ -934,59 +934,69 @@ XADGETINFO(AMPK)
+           }
+           break;
+         case AMPKENTRYTYPE_NEWDIR:
+-          if(!(err = xadHookAccess(XADM XADAC_READ, et.NameSize, dirname+dirnamesize, ai)))
++          if(dirnamesize + et.NameSize + 1 <= sizeof(dirname))
+           {
+-            dirnamesize += et.NameSize;
+-            if((fi = (struct xadFileInfo *) xadAllocObject(XADM XADOBJ_FILEINFO,
+-            XAD_OBJNAMESIZE, dirnamesize+1, TAG_DONE)))
++            if(!(err = xadHookAccess(XADM XADAC_READ, et.NameSize, dirname+dirnamesize, ai)))
+             {
+-              fi->xfi_Flags = XADFIF_DIRECTORY|XADFIF_NODATE;
+-              xadConvertDates(XADM XAD_DATECURRENTTIME, 1, XAD_GETDATEXADDATE,
+-              &fi->xfi_Date, TAG_DONE);
+-              for(i = 0; i < dirnamesize; ++i)
+-                fi->xfi_FileName[i] = dirname[i];
+-              err = xadAddFileEntry(XADM fi, ai, XAD_SETINPOS, ai->xai_InPos, TAG_DONE);
++              dirnamesize += et.NameSize;
++              if((fi = (struct xadFileInfo *) xadAllocObject(XADM XADOBJ_FILEINFO,
++              XAD_OBJNAMESIZE, dirnamesize+1, TAG_DONE)))
++              {
++                fi->xfi_Flags = XADFIF_DIRECTORY|XADFIF_NODATE;
++                xadConvertDates(XADM XAD_DATECURRENTTIME, 1, XAD_GETDATEXADDATE,
++                &fi->xfi_Date, TAG_DONE);
++                for(i = 0; i < dirnamesize; ++i)
++                  fi->xfi_FileName[i] = dirname[i];
++                err = xadAddFileEntry(XADM fi, ai, XAD_SETINPOS, ai->xai_InPos, TAG_DONE);
++              }
++              else
++                err = XADERR_NOMEMORY;
++              dirname[dirnamesize++] = '/';
+             }
+-            else
+-              err = XADERR_NOMEMORY;
+-            dirname[dirnamesize++] = '/';
+           }
++		  else
++            err = XADERR_SHORTBUFFER;
+           break;
+         case AMPKENTRYTYPE_FILE:
+-          if(!(err = xadHookAccess(XADM XADAC_READ, et.NameSize, dirname+dirnamesize, ai)))
++          if(dirnamesize + et.NameSize <= sizeof(dirname))
+           {
+-            if(!(err = xadHookAccess(XADM XADAC_READ, AMPKFile_TRUESIZE, &fl, ai)))
++            if(!(err = xadHookAccess(XADM XADAC_READ, et.NameSize, dirname+dirnamesize, ai)))
+             {
+-              xadUINT32 size = EndGetM32(fl.Size);
+-              xadUINT32 crunchedSize = EndGetM32(fl.CrunchedSize);
+-              xadUINT32 protection = EndGetM32(fl.Protection);
+-              if((fi = (struct xadFileInfo *) xadAllocObject(XADM XADOBJ_FILEINFO,
+-              XAD_OBJNAMESIZE, dirnamesize+et.NameSize+1,  fl.CommentSize ? XAD_OBJCOMMENTSIZE :
+-              TAG_DONE, fl.CommentSize+1, TAG_DONE)))
++              if(!(err = xadHookAccess(XADM XADAC_READ, AMPKFile_TRUESIZE, &fl, ai)))
+               {
+-                if(!fl.CommentSize || !(err = xadHookAccess(XADM XADAC_READ, fl.CommentSize, fi->xfi_Comment, ai)))
++                xadUINT32 size = EndGetM32(fl.Size);
++                xadUINT32 crunchedSize = EndGetM32(fl.CrunchedSize);
++                xadUINT32 protection = EndGetM32(fl.Protection);
++                if((fi = (struct xadFileInfo *) xadAllocObject(XADM XADOBJ_FILEINFO,
++                XAD_OBJNAMESIZE, dirnamesize+et.NameSize+1,  fl.CommentSize ? XAD_OBJCOMMENTSIZE :
++                TAG_DONE, fl.CommentSize+1, TAG_DONE)))
+                 {
+-                  fi->xfi_DataPos = ai->xai_InPos;
+-                  fi->xfi_PrivateInfo = (xadPTR)(uintptr_t) fl.CrunchType;
+-                  fi->xfi_EntryInfo = ampktype[fl.CrunchType];
+-                  for(i = 0; i < dirnamesize + et.NameSize; ++i)
+-                    fi->xfi_FileName[i] = dirname[i];
+-                  fi->xfi_CrunchSize = fl.CrunchType ? crunchedSize : size;
+-                  fi->xfi_Size = size;
+-                  fi->xfi_Flags = XADFIF_NODATE|XADFIF_SEEKDATAPOS|XADFIF_EXTRACTONBUILD;
+-                  xadConvertDates(XADM XAD_DATECURRENTTIME, 1, XAD_GETDATEXADDATE,
+-                  &fi->xfi_Date, TAG_DONE);
+-                  fi->xfi_Protection = protection;
+-                  skip = crunchedSize - (xadUINT32)fi->xfi_CrunchSize;
+-                  err = xadAddFileEntry(XADM fi, ai, XAD_SETINPOS, ai->xai_InPos+fi->xfi_CrunchSize, TAG_DONE);
++                  if(!fl.CommentSize || !(err = xadHookAccess(XADM XADAC_READ, fl.CommentSize, fi->xfi_Comment, ai)))
++                  {
++                    fi->xfi_DataPos = ai->xai_InPos;
++                    fi->xfi_PrivateInfo = (xadPTR)(uintptr_t) fl.CrunchType;
++                    fi->xfi_EntryInfo = ampktype[fl.CrunchType];
++                    for(i = 0; i < dirnamesize + et.NameSize; ++i)
++                      fi->xfi_FileName[i] = dirname[i];
++                    fi->xfi_CrunchSize = fl.CrunchType ? crunchedSize : size;
++                    fi->xfi_Size = size;
++                    fi->xfi_Flags = XADFIF_NODATE|XADFIF_SEEKDATAPOS|XADFIF_EXTRACTONBUILD;
++                    xadConvertDates(XADM XAD_DATECURRENTTIME, 1, XAD_GETDATEXADDATE,
++                    &fi->xfi_Date, TAG_DONE);
++                    fi->xfi_Protection = protection;
++                    skip = crunchedSize - (xadUINT32)fi->xfi_CrunchSize;
++                    err = xadAddFileEntry(XADM fi, ai, XAD_SETINPOS, ai->xai_InPos+fi->xfi_CrunchSize, TAG_DONE);
++                  }
++                  else
++                    xadFreeObjectA(XADM fi, 0);
+                 }
+                 else
+-                  xadFreeObjectA(XADM fi, 0);
++                  err = XADERR_NOMEMORY;
+               }
+-              else
+-                err = XADERR_NOMEMORY;
+             }
+           }
++		  else
++            err = XADERR_SHORTBUFFER;
+           break;
+         } /* switch */
+       }
+@@ -1648,7 +1658,7 @@ XADUNARCHIVE(LHWARP)
+         lhw.oldmode = ofs;
+         j = EndGetM32(lhw.crsize);
+         l = EndGetM32(lhw.datasize);
+-        if(l > 22*(512+16))
++        if(l > 22*(512+16) || l < 0)
+           err = XADERR_ILLEGALDATA;
+         else if(l) /* ignore empty store blocks */
+         {
