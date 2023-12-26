@@ -1,13 +1,39 @@
 #!/usr/bin/make -f
+# -*- makefile -*-
+# Uncomment this to turn on verbose mode.
+# export DH_VERBOSE=1
 
-PKG_VERSION := $(shell dpkg-parsechangelog | sed -rne 's,^Version: ([^-]+).*,\1,p')
-PKG := $(shell dh_listpackages)
-export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+# see FEATURE AREAS in dpkg-buildflags(1)
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
-ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
-	NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
-	MAKEFLAGS += -j$(NUMJOBS)
+# see ENVIRONMENT in dpkg-buildflags(1)
+# package maintainers to append CFLAGS
+#export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+# package maintainers to append LDFLAGS
+export DEB_LDFLAGS_MAINT_APPEND =
+
+include /usr/share/dpkg/default.mk
+
+PKG := $(DEB_SOURCE)
+PKG_VERSION := $(DEB_VERSION_UPSTREAM)
+
+
+%:
+	dh $@ --with bash-completion
+
+override_dh_auto_build:
+	OBJCFLAGS="$(CFLAGS)" $(MAKE) -C XADMaster -f Makefile.linux
+
+override_dh_auto_clean:
+	$(MAKE) -C XADMaster -f Makefile.linux clean
+
+override_dh_auto_test:
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	XADMaster/XADTest2
+	XADMaster/XADTest3
+	XADMaster/XADTest4
 endif
+
 
 get-orig-source:
 	# Uscan can grab upstream source zip
@@ -44,21 +70,4 @@ get-orig-source:
 	tar -cvJf ../$(PKG)_$(PKG_VERSION).orig.tar.xz --owner \
 			root --group root --mode a+rX \
 			$(PKG)-$(PKG_VERSION).orig
-
 	rm -r $(PKG)-$(PKG_VERSION).orig
-
-%:
-	dh $@ --with bash-completion
-
-override_dh_auto_build:
-	OBJCFLAGS="$(CFLAGS)" $(MAKE) -C XADMaster -f Makefile.linux
-
-override_dh_auto_clean:
-	$(MAKE) -C XADMaster -f Makefile.linux clean
-
-override_dh_auto_test:
-ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
-	XADMaster/XADTest2
-	XADMaster/XADTest3
-	XADMaster/XADTest4
-endif

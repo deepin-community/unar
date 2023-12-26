@@ -1,23 +1,37 @@
 Source: unar
-Maintainer: Deepin Developer <deepin-dev@deepin.org>
-Uploaders: Deepin Packages Builder <packages@deepin.org>
- Julián Moreno Patiño <julian@debian.org>
 Section: utils
 Priority: optional
-Build-Depends: debhelper (>= 9.20120115), gobjc, libbz2-dev, libgnustep-base-dev,
- libicu-dev, libssl-dev, libwavpack-dev, zlib1g-dev, bash-completion (>= 1:1.0)
-Standards-Version: 3.9.8
-Homepage: http://unarchiver.c3.cx/
-#Vcs-Git
-#Vcs-Browser
+Maintainer: Debian Accessibility Team <pkg-a11y-devel@alioth-lists.debian.net>
+Uploaders:
+ Boyuan Yang <byang@debian.org>,
+Build-Depends:
+ bash-completion (>= 1:1.0),
+ debhelper-compat (= 13),
+ gobjc,
+ libbz2-dev,
+ libgnustep-base-dev,
+ libicu-dev,
+ libssl-dev,
+ libwavpack-dev,
+ zlib1g-dev,
+Standards-Version: 4.6.0
+Homepage: https://theunarchiver.com/command-line
+Vcs-Git: https://salsa.debian.org/debian/unar.git
+Vcs-Browser: https://salsa.debian.org/debian/unar
 
 Package: unar
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}
-Pre-Depends: dpkg (>= 1.15.6~)
-Conflicts: theunarchiver
-Provides: theunarchiver
-Replaces: theunarchiver
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+Pre-Depends:
+ ${misc:Pre-Depends},
+Conflicts:
+ theunarchiver,
+Provides:
+ theunarchiver,
+Replaces:
+ theunarchiver,
 Description: Unarchiver for a variety of file formats
  The Unarchiver is an archive unpacker program with support for the popular
  zip, RAR, 7z, tar, gzip, bzip2, LZMA, XZ, CAB, MSI, NSIS, EXE, ISO, BIN, and

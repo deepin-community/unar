@@ -1,6 +1,6 @@
 # unar(1) completion
 
-have unar &&
+_have unar &&
 _unar()
 {
     local cur prev
@@ -43,7 +43,7 @@ complete -F _unar unar
 
 # lsar(1) completion
 
-have lsar &&
+_have lsar &&
 _lsar()
 {
     local cur prev

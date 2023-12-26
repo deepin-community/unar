@@ -1,7 +1,7 @@
 #!/bin/sh
 
 set -e
-cd $ADTTMP
+cd $AUTOPKGTEST_TMP
 mkdir foo
 echo bar >foo/bar
 echo baz >foo/baz
