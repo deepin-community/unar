@@ -1,5 +1,262 @@
-unar (1.10.1.1.1-deepin) stable; urgency=medium
+unar (1.10.7+ds1+really1.10.1-2) unstable; urgency=medium
 
-  * ['Rebuild  against by  current gcc 11.2']
+  * Team upload.
+  * Move package to team-maintenance. (Closes: #1010174)
+  * debian/watch: Monitor new upstream on GitHub.
 
- -- Deepin Packages Builder <packages@deepin.org>  Wed, 10 Aug 2022 21:30:27 +0800
+ -- Boyuan Yang <byang@debian.org>  Mon, 02 May 2022 14:19:10 -0400
+
+unar (1.10.7+ds1+really1.10.1-1) unstable; urgency=medium
+
+  * QA upload.
+  * Revert to 1.10.1-4 source code for now due to autopkgtest error
+    (bus error on armhf, s390x) with new version. Pending future fix.
+    + Keep debian/unar.maintscript.
+    + Keep debian/unar-bash-completion fix.
+
+ -- Boyuan Yang <byang@debian.org>  Thu, 28 Apr 2022 14:28:11 -0400
+
+unar (1.10.7+ds1-1) unstable; urgency=medium
+
+  * QA upload.
+  * New upstream version 1.10.7. (Closes: #974972)
+    + Import separate UniversalDetector v1.1 as component.
+   * debian/control: Use "Rules-Requires-Root: no".
+  * debian/unar.maintscript: Migrate away from dpkg-maintscript-helper.
+  * debian/unar-bash-completion: Drop obsolete syntax.
+    (Closes: #1008266) (LP: #1775046)
+  * debian/unar.bash-completion: Install upstream-provided bash completion.
+  * debian/unar.manpages: Install upstream-provided man pages.
+  * debian/watch: Monitor new upstream on GitHub.
+  * debian/copyright:
+    + Update Files-Excluded field for source package repack.
+  * debian/rules:
+    + Drop obsolete get-orig-source target.
+    + Update manual post-build test commands.
+  * debian/patches: Analyze all old patches:
+    - fix-crashes.patch: Dropped, applied upstream.
+    + CSInputBuffer-bit-string-reading.patch: Refreshed as
+      0001-Proper-fix-for-CSInputBuffer-bit-string-reading.patch.
+    - gnustep-support.patch: Dropped, original source file disappeared.
+    - proper-init-autoreleasepool.patch: Dropped, original file disappeared.
+    - document-undocumented-options.patch: Dropped, applied upstream.
+    - use-system-wavpack.patch: Dropped, applied upstream.
+    + pass-cppflags-for-fortify-functions.patch: Refreshed as
+      0003-Pass-CPPFLAGS-to-use-hardening-flags-fortify-functio.patch.
+    - remove-build-date.patch: Dropped, no longer needed since newer GCC
+      already made __DATE__ reproducible.
+  * debian/patches:
+    + Add 0002-Do-not-use-NATIVE_OBJC_EXCEPTIONS.patch.
+      Taken from Arch Linux.
+
+ -- Boyuan Yang <byang@debian.org>  Wed, 27 Apr 2022 15:10:23 -0400
+
+unar (1.10.1-4) unstable; urgency=medium
+
+  * QA upload.
+
+  [ Matt Kraai ]
+  * Update the Homepage field, thanks to Paul Wise (Closes: #891602).
+
+  [ Boyuan Yang ]
+  * debian/: Apply wrap-and-sort -abst.
+  * debian/control:
+    + Bump Standards-Version to 4.6.0.
+    + Bump debhelper compat to v13.
+    + Use correct Vcs-* URLs. (Closes: #958528)
+    + Drop unnecessary Pre-Depends.
+  * debian/rules: Slightly simplify using dpkg default.mk.
+  * debian/copyright: Update source field. (see #891602)
+  * debian/tests/*: Fix lintian warning uses-deprecated-adttmp.
+
+ -- Boyuan Yang <byang@debian.org>  Mon, 25 Apr 2022 14:04:13 -0400
+
+unar (1.10.1-3) unstable; urgency=medium
+
+  * QA upload.
+  * Orphan the package (take over package maintenance) via
+    ITS process. (Closes: #1008569)
+  * debian/control: Set package maintainer to Debian QA Group.
+
+ -- Boyuan Yang <byang@debian.org>  Mon, 11 Apr 2022 12:27:28 -0400
+
+unar (1.10.1-2) unstable; urgency=medium
+
+  * Add d/patches/fix-crashes.patch patch.
+    + Import upstream's commits to fix crashes. (Closes: #853034)
+  * Add d/patches/gnustep-support.patch patch.
+    + Fix FTBFS by missing GNUSTEP headers.
+    + Thanks YOSHINO Yoshihito for it.
+  * Add d/patches/proper-init-autoreleasepool.patch patch.
+    + Proper init NSAutoreleasePool to avoid FTBFS.
+    + Thanks YOSHINO Yoshihito for it.
+  * Add d/patches/CSInputBuffer-bit-string-reading.patch patch.
+    + Proper fix for CSInputBuffer bit string reading to
+      avoid unar crashes when extracting rar files.
+    + Thanks YOSHINO Yoshihito for it.
+
+ -- Julián Moreno Patiño <julian@debian.org>  Thu, 23 Mar 2017 08:45:08 -0500
+
+unar (1.10.1-1) unstable; urgency=medium
+
+  [Matt Kraai]
+  * Update Standards-Version to 3.9.7.
+
+  [Julián Moreno Patiño]
+  * New upstream release. (Closes: #800326)
+  * d/control:
+    + Update Standards-Version to 3.9.8. (no changes)
+    + Remove XS-Testsuite, not necessary since dpkg 1.17.11.
+    + Use HTTPS transport protocol for Vcs-Git URI.
+  * d/rules:
+    + Improve hardening flags support.
+    + Remove override_dh_builddeb, Now dpkg-deb uses xz
+      compression by default.
+  * d/copyright:
+    + Update copyright.
+    + Extend debian copyright holder years.
+  * d/patches:
+    + Update patches offset.
+  * d/source/options: Remove, now xz format is default.
+
+ -- Julián Moreno Patiño <julian@debian.org>  Fri, 27 May 2016 10:27:17 -0500
+
+unar (1.9.1-1) unstable; urgency=medium
+
+  * Remove /etc/bash_completion.d/unar when upgrading (Closes: #800131).
+  * Update debian/watch to use Bitbucket.
+  * New upstream release (Closes: #774011, #774016, #774961, #804119).
+  * Add #DEBHELPER# to maintainer scripts.
+  * Use "set -e" in maintainer scripts.
+  * Specify the short name of a license.
+
+ -- Matt Kraai <kraai@debian.org>  Thu, 05 Nov 2015 20:56:04 -0800
+
+unar (1.8.1-4) unstable; urgency=medium
+
+  [Matt Kraai]
+  * Document lsar's -L and -v options and unar's -v option.
+  * Update Standards-Version to 3.9.6 (no changes).
+
+  [Jérémy Bobbio]
+  * Add a patch to remove the build date from the binaries in
+    order to make the package build reproducibly (Closes: #782853).
+
+ -- Matt Kraai <kraai@debian.org>  Mon, 04 May 2015 21:48:31 -0700
+
+unar (1.8.1-3) unstable; urgency=medium
+
+  [Matt Kraai]
+  * Change the result type of comparison functions to NSComparisonResult
+    (Closes: #749805).
+
+ -- Matt Kraai <kraai@debian.org>  Sun, 01 Jun 2014 07:33:50 -0700
+
+unar (1.8.1-2) unstable; urgency=medium
+
+  [Matt Kraai]
+  * Fix the dependencies for the tar autopkgtest (Closes: #739728).
+  * Update Standards-Version to 3.9.5 (no changes).
+
+ -- Matt Kraai <kraai@debian.org>  Sat, 22 Feb 2014 06:26:10 -0800
+
+unar (1.8.1-1) unstable; urgency=low
+
+  [Matt Kraai]
+  * Add some autopkgtests.
+
+  [Julián Moreno Patiño]
+  * New upstream release.
+  * d/copyright:
+    + Add missing upstream copyright.
+    + Extend copyright holders years.
+
+ -- Matt Kraai <kraai@debian.org>  Wed, 28 Aug 2013 00:06:12 -0700
+
+unar (1.7-1) unstable; urgency=low
+
+  [Matt Kraai]
+  * d/rules: Move parallel validation to work properly.
+
+  [Julián Moreno Patiño]
+  * New upstream release. (Closes: #695247)
+  * d/control:
+    + Bump Standards-Version to 3.9.4 (no changes).
+    + Remove DM-Upload-Allowed.
+    + Update Homepage.
+    + Use canonical URIs for Vcs-* fields.
+  * d/rules: Improve get-orig-source target.
+  * Refresh patches offset.
+  * Extend debian copyright holders years.
+
+ -- Julián Moreno Patiño <julian@debian.org>  Tue, 16 Jul 2013 11:39:12 -0500
+
+unar (1.2-2) unstable; urgency=low
+
+  * d/patches/pass-cppflags-for-fortify-functions.patch
+    Pass CFLAGS properly. (Closes: #687503)
+
+ -- Julián Moreno Patiño <julian@debian.org>  Sun, 16 Sep 2012 22:10:27 -0500
+
+unar (1.2-1) unstable; urgency=low
+
+  * New upstream release.
+  * d/patches/link-with-g++.patch: Remove patch.
+    + Merge with upstream.
+  * d/patches/use-system-wavpack.patch: Refresh patch
+    offset.
+  * d/patches/pass-cppflags-for-fortify-functions.patch:
+    Add patch to pass CPPFLAGS to use fortify functions.
+  * d/{control,copyright}: Update my email.
+  * d/rules: Improve get-orig-source target.
+  * d/README.source: Improve help description.
+
+ -- Julián Moreno Patiño <julian@debian.org>  Sat, 08 Sep 2012 15:52:35 -0500
+
+unar (1.1-2) unstable; urgency=low
+
+  * Link with g++.
+
+ -- Matt Kraai <kraai@debian.org>  Thu, 24 May 2012 21:41:48 -0700
+
+unar (1.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * Update use-system-wavpack.patch to point
+    to XADMaster/Makefile.common (split file
+    from XADMaster/Makefile.linux).
+
+ -- Julián Moreno Patiño <darkjunix@gmail.com>  Sat, 12 May 2012 20:33:45 -0500
+
+unar (1.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * Refresh use-system-wavpack.patch patch offset.
+  * Bump Standards-Version to 3.9.3.
+    + Update DEP5 to copyright-format 1.0.
+      + Extend debian copyright holder year.
+  * Bump debhelper version to 9.20120115
+    because now compat level 9 is recommended.
+    + Remove debian/source/lintian-overrides.
+  * Use rm -rf to remove other OSs specific folders
+    in debian/rules.
+
+ -- Julián Moreno Patiño <darkjunix@gmail.com>  Sat, 24 Mar 2012 22:22:36 -0500
+
+unar (0.99-2) unstable; urgency=low
+
+  * Add bash completion support. (Closes: #651038)
+    + Add bash-completion to B-D.
+    + Add bash_completion addon to dh.
+  * Change binary package compression from bzip2 to xz.
+    + Add Pre-Depends on dpkg (>= 1.15.6~).
+  * Add get-orig-source target in debian/rules.
+    + Document how to get the tarball in README.source.
+
+ -- Julián Moreno Patiño <darkjunix@gmail.com>  Sun, 22 Jan 2012 01:40:21 -0500
+
+unar (0.99-1) unstable; urgency=low
+
+  * Package.
+
+ -- Matt Kraai <kraai@debian.org>  Sun, 13 Nov 2011 06:27:41 -0800

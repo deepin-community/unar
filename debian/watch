@@ -1,3 +1,11 @@
-version=3
-http://bitbucket.org/WAHa_06x36/theunarchiver/downloads \
-  .*/unar-(\d\S*)\.tar\.bz2
+version=4
+# Instruction on introducing new version: retrieve new tarball with "uscan".
+opts="repack,repacksuffix=+ds1,dversionmangle=s/\+ds\d*$//,filenamemangle=s%(?:.*?)?v?(\d[\d.]*@ARCHIVE_EXT@)%@PACKAGE@-stub-$1%" \
+ https://github.com/MacPaw/XADMaster/tags \
+ (?:.*?/)?v?@ANY_VERSION@@ARCHIVE_EXT@
+opts="component=XADMaster,filenamemangle=s%(?:.*?)?v?(\d[\d.]*@ARCHIVE_EXT@)%@PACKAGE@-$1%" \
+ https://github.com/MacPaw/XADMaster/tags \
+ (?:.*?/)?v?@ANY_VERSION@@ARCHIVE_EXT@ ignore
+opts="component=UniversalDetector,filenamemangle=s%(?:.*?)?v?(\d[\d.]*@ARCHIVE_EXT@)%@PACKAGE@-$1%" \
+ https://github.com/MacPaw/universal-detector/tags \
+ (?:.*?/)?v?@ANY_VERSION@@ARCHIVE_EXT@ ignore
