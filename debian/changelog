@@ -1,3 +1,9 @@
+unar (1.10.7+ds1+really1.10.1-2deepin1) unstable; urgency=medium
+
+  * feat: add sw64 support.
+
+ -- hudeng <hudeng@deepin.org>  Wed, 04 Jun 2025 18:02:51 +0800
+
 unar (1.10.7+ds1+really1.10.1-2) unstable; urgency=medium
 
   * Team upload.
