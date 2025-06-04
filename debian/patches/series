@@ -6,3 +6,4 @@ document-undocumented-options.patch
 use-system-wavpack.patch
 pass-cppflags-for-fortify-functions.patch
 remove-build-date.patch
+0001-deepin-sw_64-support.diff
