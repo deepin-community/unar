@@ -1,1 +1,2 @@
-debian/unar-bash-completion unar
+Extra/unar.bash_completion unar
+Extra/lsar.bash_completion lsar

@@ -1,0 +1,38 @@
+Description: Use package UniversalDetector.
+Author: Bastian Germann <bage@debian.org>
+Author: Yavor Doganov <yavor@gnu.org>
+Forwarded: not-needed
+Last-Update: 2024-09-01
+---
+
+--- unar.orig/Makefile.linux
++++ unar/Makefile.linux
+@@ -74,15 +74,14 @@
+ ../UniversalDetector/libUniversalDetector.a:
+ 	make -C ../UniversalDetector -f Makefile.linux
+ 
+-unar: $(UNAR_OBJS) $(CMDLINE_OBJS) libXADMaster.a ../UniversalDetector/libUniversalDetector.a
++unar: $(UNAR_OBJS) $(CMDLINE_OBJS) libXADMaster.a /usr/lib/$(DEB_HOST_MULTIARCH)/libUniversalDetector.a
+ 	$(LD) $(ALL_LDFLAGS) -o $@ $^ $(LIBS)
+ 
+-lsar: $(LSAR_OBJS) $(CMDLINE_OBJS) libXADMaster.a ../UniversalDetector/libUniversalDetector.a
++lsar: $(LSAR_OBJS) $(CMDLINE_OBJS) libXADMaster.a /usr/lib/$(DEB_HOST_MULTIARCH)/libUniversalDetector.a
+ 	$(LD) $(ALL_LDFLAGS) -o $@ $^ $(LIBS)
+ 
+ clean:
+ 	rm -rf $(BUILD_DIR) $(EXECUTABLE_FILES) $(LIBRARY_FILES)
+-	make -C ../UniversalDetector -f Makefile.linux clean
+ 
+ .PHONY: ../UniversalDetector/libUniversalDetector.a clean
+ 
+--- unar.orig/XADString.m
++++ unar/XADString.m
+@@ -20,7 +20,7 @@
+  */
+ #import "XADString.h"
+ 
+-#import "../UniversalDetector/UniversalDetector.h"
++#import "universaldetector/UniversalDetector.h"
+ 
+ 
+ 

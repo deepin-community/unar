@@ -1,0 +1,30 @@
+Description: Fix FTBFS with LTO.
+Bug-Debian: https://bugs.debian.org/1015697
+Author: Yavor Doganov <yavor@gnu.org>
+Forwarded: no
+Last-Update: 2024-09-01
+---
+
+--- unar.orig/XADNSAParser.m
++++ unar/XADNSAParser.m
+@@ -162,7 +163,7 @@
+ 
+ 	CSInputBuffer *input=CSInputBufferAlloc(fh,(int)[fh fileSize]);
+ 
+-	@try
++	NS_DURING
+ 	{
+ 		for(int channel=0;channel<3;channel++)
+ 		{
+@@ -199,9 +200,8 @@
+ 			}
+ 		}
+ 	}
+-	@catch(id e)
+-	{
+-	}
++	NS_HANDLER
++	NS_ENDHANDLER
+ 
+ 	CSInputBufferFree(input);
+ 
