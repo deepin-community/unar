@@ -1,12 +1,15 @@
-Description: Remove build date from binaries
+Description: Remove build date from binaries.
  In order to make unar build reproducibly, we remove the build date
  from the binaries. In the context of Debian these dates give no
  extra information.
-Author: Jérémy Bobbio <lunar@debian.org>
+Author: JÃ©rÃ©my Bobbio <lunar@debian.org>
+Forwarded: not-needed
+Last-Update: 2024-09-01
+---
 
---- a/XADMaster/lsar.m
-+++ b/XADMaster/lsar.m
-@@ -37,7 +37,7 @@
+--- unar.orig/lsar.m
++++ unar/lsar.m
+@@ -57,7 +57,7 @@
  	CSCommandLineParser *cmdline=[[CSCommandLineParser new] autorelease];
  
  	[cmdline setUsageHeader:
@@ -15,9 +18,9 @@ Author: Jérémy Bobbio <lunar@debian.org>
  	@"Usage: lsar [options] archive [files ...]\n"
  	@"\n"
  	@"Available options:\n"];
---- a/XADMaster/unar.m
-+++ b/XADMaster/unar.m
-@@ -24,7 +24,7 @@
+--- unar.orig/unar.m
++++ unar/unar.m
+@@ -44,7 +44,7 @@
  	CSCommandLineParser *cmdline=[[CSCommandLineParser new] autorelease];
  
  	[cmdline setUsageHeader:

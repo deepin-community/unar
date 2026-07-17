@@ -1,9 +1,8 @@
-fix-crashes.patch
 CSInputBuffer-bit-string-reading.patch
-gnustep-support.patch
-proper-init-autoreleasepool.patch
-document-undocumented-options.patch
-use-system-wavpack.patch
 pass-cppflags-for-fortify-functions.patch
 remove-build-date.patch
-0001-deepin-sw_64-support.diff
+Use-package-UniversalDetector.patch
+Revert-Switch-to-faster-CRC-implementations.patch
+gcconefour
+correct-version.patch
+lto.patch

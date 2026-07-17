@@ -1,9 +1,17 @@
-Description: Proper fix for CSInputBuffer bit string reading.
-Author: YOSHINO Yoshihito <yy.y.ja.jp@gmail.com>
-Last-Update: 2017-06-10
---- a/XADMaster/CSInputBuffer.h
-+++ b/XADMaster/CSInputBuffer.h
-@@ -130,12 +130,20 @@
+From: YOSHINO Yoshihito <yy.y.ja.jp@gmail.com>
+Date: Sat, 10 Jun 2017 00:55:37 -0400
+Subject: Proper fix for CSInputBuffer bit string reading.
+
+Last-Update: 2022-04-27
+---
+ CSInputBuffer.h | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/CSInputBuffer.h b/CSInputBuffer.h
+index dae2319..0a23a7e 100644
+--- a/CSInputBuffer.h
++++ b/CSInputBuffer.h
+@@ -150,12 +150,20 @@ static inline unsigned int CSInputBitsLeftInBuffer(CSInputBuffer *self)
  
  static inline void _CSInputCheckAndFillBits(CSInputBuffer *self,int numbits)
  {
@@ -26,14 +34,3 @@ Last-Update: 2017-06-10
  }
  
  static inline unsigned int CSInputPeekBitString(CSInputBuffer *self,int numbits)
---- a/XADMaster/CSInputBuffer.m
-+++ b/XADMaster/CSInputBuffer.m
-@@ -181,8 +181,6 @@
- //		shift-=8;
- //	}
- 
--	if(startoffset+numbytes>_CSInputBytesLeftInBuffer(self)) _CSInputBufferRaiseEOF(self);
--
- 	switch(numbytes)
- 	{
- 		case 4:

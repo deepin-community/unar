@@ -1,0 +1,58 @@
+Description: Revert "Switch to faster CRC implementations in some archives".
+ This reverts commit 2da64b6b62be7532fb28621164d5213fe4f37fe4 and
+ parts of commit e7ca55b2a85f3e75883c70f7133575108a55e355 because the
+ faster CRC implementation calculates a wrong CRC on big endian
+ machines.
+Author: Bastian Germann <bage@debian.org>
+Forwarded: https://github.com/MacPaw/XADMaster/issues/168
+Last-Update: 2025-02-21
+---
+
+---
+--- unar.orig/XADGzipParser.m
++++ unar/XADGzipParser.m
+@@ -259,7 +259,7 @@
+ 		case DataState:
+ 		{
+ 			int actual=[currhandle readAtMost:num-bytesread toBuffer:&bytebuf[bytesread]];
+-			crc=XADCalculateCRCFast(crc,&bytebuf[bytesread],actual,XADCRCTable_sliced16_edb88320);
++			crc=XADCalculateCRC(crc,&bytebuf[bytesread],actual,XADCRCTable_edb88320);
+ 
+ 			bytesread+=actual;
+ 
+--- unar.orig/XADRARInputHandle.m
++++ unar/XADRARInputHandle.m
+@@ -68,7 +68,7 @@
+ 
+ 		[parent readBytes:numbytes toBuffer:&bytebuf[total]];
+ 
+-        crc=XADCalculateCRCFast(crc,&bytebuf[total],numbytes,XADCRCTable_sliced16_edb88320);
++		crc=XADCalculateCRC(crc,&bytebuf[total],numbytes,XADCRCTable_edb88320);
+ 
+ 		total+=numbytes;
+ 
+--- unar.orig/XADCRCHandle.m
++++ unar/XADCRCHandle.m
+@@ -28,18 +28,18 @@
+ +(XADCRCHandle *)IEEECRC32HandleWithHandle:(CSHandle *)handle
+ correctCRC:(uint32_t)correctcrc conditioned:(BOOL)conditioned
+ {
+-	if(conditioned) return [[[XADFastIEEECRC32Handle alloc] initWithHandle:handle length:CSHandleMaxLength initialCRC:0xffffffff
++	if(conditioned) return [[[self alloc] initWithHandle:handle length:CSHandleMaxLength initialCRC:0xffffffff
+ 	correctCRC:correctcrc^0xffffffff CRCTable:XADCRCTable_edb88320] autorelease];
+-	else return [[[XADFastIEEECRC32Handle alloc] initWithHandle:handle length:CSHandleMaxLength initialCRC:0
++	else return [[[self alloc] initWithHandle:handle length:CSHandleMaxLength initialCRC:0
+ 	correctCRC:correctcrc CRCTable:XADCRCTable_edb88320] autorelease];
+ }
+ 
+ +(XADCRCHandle *)IEEECRC32HandleWithHandle:(CSHandle *)handle length:(off_t)length
+ correctCRC:(uint32_t)correctcrc conditioned:(BOOL)conditioned
+ {
+-	if(conditioned) return [[[XADFastIEEECRC32Handle alloc] initWithHandle:handle length:length initialCRC:0xffffffff
++	if(conditioned) return [[[self alloc] initWithHandle:handle length:length initialCRC:0xffffffff
+ 	correctCRC:correctcrc^0xffffffff CRCTable:XADCRCTable_edb88320] autorelease];
+-	else return [[[XADFastIEEECRC32Handle alloc] initWithHandle:handle length:length initialCRC:0
++	else return [[[self alloc] initWithHandle:handle length:length initialCRC:0
+ 	correctCRC:correctcrc CRCTable:XADCRCTable_edb88320] autorelease];
+ }
+ 

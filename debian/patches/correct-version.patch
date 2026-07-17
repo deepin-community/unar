@@ -1,0 +1,38 @@
+Origin: https://github.com/MacPaw/XADMaster/pull/169
+From: Bastian Germann <bage@debian.org>
+Date: Fri, 19 Apr 2024 23:01:15 +0200
+Subject: Set already published version
+
+Commit 881e0ec25e249c9ad5bbc1b6782ae8dcdf48a6ed was tagged as v1.10.8.
+Represent that version in the program's version string.
+---
+ lsar.m | 2 +-
+ unar.m | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/lsar.m b/lsar.m
+index 12fd7429..0b298196 100644
+--- a/lsar.m
++++ b/lsar.m
+@@ -25,7 +25,7 @@
+ #import "CSJSONPrinter.h"
+ #import "CommandLineCommon.h"
+ 
+-#define VERSION_STRING @"v1.10.7"
++#define VERSION_STRING @"v1.10.8"
+ 
+ #define EntryDoesNotNeedTestingResult 0
+ #define EntryIsNotSupportedResult 1
+diff --git a/unar.m b/unar.m
+index 18828c5f..564978b3 100644
+--- a/unar.m
++++ b/unar.m
+@@ -24,7 +24,7 @@
+ #import "CommandLineCommon.h"
+ #import "CSFileHandle.h"
+ 
+-#define VERSION_STRING @"v1.10.7"
++#define VERSION_STRING @"v1.10.8"
+ 
+ @interface Unarchiver:NSObject {}
+ @end
